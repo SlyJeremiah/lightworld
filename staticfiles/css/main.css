@@ -1,0 +1,785 @@
+/* ============================================================
+   Light World Engineering – main.css
+   Brand: Navy / Gold / Red   Font: Bebas Neue + Barlow
+   ============================================================ */
+
+:root {
+  --lw-navy:      #0a1628;
+  --lw-navy-mid:  #102040;
+  --lw-navy-light:#1a3060;
+  --lw-gold:      #f0c030;
+  --lw-gold-dark: #c89010;
+  --lw-red:       #cc2020;
+  --lw-white:     #f5f5f0;
+  --lw-grey:      #8899aa;
+  --lw-cyan:      #40c0e0;
+  --lw-section-pad: 90px;
+}
+
+/* ── RESET & BASE ──────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--lw-navy);
+  color: var(--lw-white);
+  font-family: 'Barlow', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ── BACKGROUNDS ───────────────────────────────────────────── */
+.bg-lw-navy  { background: var(--lw-navy);     }
+.bg-lw-mid   { background: var(--lw-navy-mid); }
+
+/* ── NAVBAR ────────────────────────────────────────────────── */
+.lw-navbar {
+  background: rgba(10,22,40,0.95);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(240,192,48,0.18);
+  padding: 0;
+  height: 68px;
+}
+
+.lw-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.lw-brand-globe {
+  font-size: 26px;
+  line-height: 1;
+}
+
+.lw-brand-text {
+  line-height: 1.15;
+}
+.lw-brand-name {
+  display: block;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: var(--lw-white);
+}
+.lw-brand-sub {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--lw-gold);
+  text-transform: uppercase;
+}
+
+.lw-nav-link {
+  color: var(--lw-grey) !important;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 8px 12px !important;
+  transition: color 0.2s;
+}
+.lw-nav-link:hover { color: var(--lw-gold) !important; }
+
+.lw-toggler {
+  border: 1px solid rgba(240,192,48,0.3);
+  color: var(--lw-gold);
+  font-size: 22px;
+}
+
+/* ── BUTTONS ───────────────────────────────────────────────── */
+.lw-btn-gold {
+  background: linear-gradient(135deg, var(--lw-gold), var(--lw-gold-dark));
+  color: var(--lw-navy);
+  border: none;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 4px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(240,192,48,0.28);
+}
+.lw-btn-gold:hover {
+  color: var(--lw-navy);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(240,192,48,0.42);
+}
+
+.lw-btn-outline {
+  background: transparent;
+  color: var(--lw-white);
+  border: 1px solid rgba(255,255,255,0.28);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 4px;
+  transition: border-color 0.2s, color 0.2s;
+}
+.lw-btn-outline:hover { border-color: var(--lw-gold); color: var(--lw-gold); }
+
+.lw-btn-outline-sm {
+  background: transparent;
+  color: var(--lw-grey);
+  border: 1px solid rgba(255,255,255,0.15);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 4px;
+  padding: 8px 16px;
+  transition: border-color 0.2s, color 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+.lw-btn-outline-sm:hover { border-color: var(--lw-gold); color: var(--lw-gold); }
+
+/* ── MESSAGES ──────────────────────────────────────────────── */
+.lw-messages-container {
+  position: fixed;
+  top: 80px;
+  left: 0; right: 0;
+  z-index: 999;
+  padding: 0 16px;
+}
+
+/* ── HERO ──────────────────────────────────────────────────── */
+.lw-hero {
+  position: relative;
+  overflow: hidden;
+  padding-top: 68px;
+}
+
+.lw-hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 55% 70% at 80% 50%, rgba(26,48,96,0.85) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 15% 85%, rgba(240,192,48,0.07) 0%, transparent 60%),
+    linear-gradient(160deg, #060f20 0%, #0d1e38 55%, #060f20 100%);
+}
+.lw-hero-bg::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(240,192,48,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240,192,48,0.035) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 75%);
+}
+
+.lw-hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(56px, 9vw, 110px);
+  line-height: 0.92;
+  letter-spacing: 2px;
+  color: var(--lw-white);
+}
+.lw-hero-sub-word {
+  font-size: 0.5em;
+  color: var(--lw-grey);
+  letter-spacing: 6px;
+}
+
+.lw-hero-desc {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--lw-grey);
+  max-width: 500px;
+  margin-top: 16px;
+}
+
+.lw-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(240,192,48,0.1);
+  border: 1px solid rgba(240,192,48,0.28);
+  border-radius: 100px;
+  padding: 6px 18px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--lw-gold);
+}
+.lw-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--lw-gold);
+  animation: pulse 1.6s infinite;
+}
+
+@keyframes pulse {
+  0%,100% { opacity:1; transform:scale(1); }
+  50%      { opacity:0.4; transform:scale(1.5); }
+}
+
+/* Stats */
+.lw-stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 36px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.lw-stat-num {
+  display: block;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 40px;
+  color: var(--lw-gold);
+  line-height: 1;
+}
+.lw-stat-label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: var(--lw-grey);
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+
+/* ── SECTION SHARED ────────────────────────────────────────── */
+.lw-section { padding: var(--lw-section-pad) 0; }
+
+.lw-section-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--lw-gold);
+  margin-bottom: 10px;
+}
+
+.lw-section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(38px, 5vw, 68px);
+  line-height: 1;
+  letter-spacing: 1px;
+  color: var(--lw-white);
+  margin-bottom: 14px;
+}
+
+.lw-section-desc {
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--lw-grey);
+  max-width: 540px;
+  margin-bottom: 48px;
+}
+
+.lw-section-header { margin-bottom: 48px; }
+.lw-section-header .lw-section-desc { margin-bottom: 0; }
+
+/* ── SERVICE CARDS ─────────────────────────────────────────── */
+.lw-service-card {
+  background: var(--lw-navy-mid);
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 36px 30px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+.lw-service-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--lw-gold), var(--lw-cyan));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s;
+}
+.lw-service-card:hover {
+  background: var(--lw-navy-light);
+  transform: translateY(-5px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.35);
+}
+.lw-service-card:hover::after { transform: scaleX(1); }
+
+.lw-service-icon { font-size: 38px; margin-bottom: 18px; }
+.lw-service-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  color: var(--lw-white);
+}
+.lw-service-desc {
+  font-size: 14px;
+  color: var(--lw-grey);
+  line-height: 1.7;
+  flex: 1;
+  margin-bottom: 18px;
+}
+.lw-service-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 30px;
+  color: var(--lw-gold);
+  margin-bottom: 12px;
+}
+.lw-service-price small {
+  font-family: 'Barlow', sans-serif;
+  font-size: 12px;
+  color: var(--lw-grey);
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.lw-service-link {
+  color: var(--lw-gold);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: gap 0.2s;
+}
+.lw-service-link:hover { color: var(--lw-gold); opacity: 0.8; }
+
+/* ── SURVEY STRIP ──────────────────────────────────────────── */
+.lw-survey-strip {
+  background: linear-gradient(90deg, var(--lw-red) 0%, #a01515 100%);
+  padding: 28px 5vw;
+}
+.lw-strip-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.lw-strip-sub { font-size: 13px; opacity: 0.8; }
+.lw-strip-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 52px;
+  line-height: 1;
+  color: var(--lw-gold);
+}
+
+/* ── PRICE CARD ────────────────────────────────────────────── */
+.lw-price-card {
+  background: linear-gradient(135deg, var(--lw-navy-light), #0c1c38);
+  border: 1px solid rgba(240,192,48,0.22);
+  border-radius: 8px;
+  padding: 36px 36px 28px;
+  position: relative;
+  overflow: hidden;
+}
+.lw-price-card::before {
+  content: '';
+  position: absolute; top:-80px; right:-80px;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(240,192,48,0.09) 0%, transparent 70%);
+}
+.lw-price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  gap: 16px;
+}
+.lw-price-row:last-of-type { border-bottom: none; }
+.lw-price-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--lw-white);
+}
+.lw-price-icon {
+  width: 38px; height: 38px;
+  background: rgba(240,192,48,0.1);
+  border: 1px solid rgba(240,192,48,0.22);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.lw-price-tag {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 26px;
+  color: var(--lw-gold);
+  white-space: nowrap;
+}
+.lw-price-note {
+  background: rgba(240,192,48,0.06);
+  border: 1px solid rgba(240,192,48,0.14);
+  border-radius: 6px;
+  padding: 14px 16px;
+}
+.lw-incl-text { font-size: 13px; color: var(--lw-white); line-height: 1.8; }
+
+/* ── SOLAR CARDS ───────────────────────────────────────────── */
+.lw-solar-card {
+  background: var(--lw-navy-mid);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.lw-solar-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+}
+.lw-solar-featured { border-color: var(--lw-gold); }
+
+.lw-popular-badge {
+  position: absolute; top: 14px; right: -22px;
+  background: var(--lw-gold);
+  color: var(--lw-navy);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  padding: 4px 32px;
+  transform: rotate(45deg);
+}
+
+.lw-solar-header {
+  background: linear-gradient(135deg, var(--lw-navy-light), #0c1c3a);
+  padding: 22px 26px 18px;
+}
+.lw-kva {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 52px;
+  line-height: 1;
+  color: var(--lw-gold);
+}
+.lw-kva-sub {
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  color: var(--lw-grey);
+  text-transform: uppercase;
+}
+
+.lw-solar-body {
+  padding: 22px 26px 26px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.lw-features {
+  list-style: none;
+  padding: 0; margin: 0 0 20px;
+  flex: 1;
+}
+.lw-features li {
+  font-size: 13px;
+  color: var(--lw-grey);
+  padding: 4px 0 4px 16px;
+  position: relative;
+  line-height: 1.5;
+}
+.lw-features li::before {
+  content: '▸';
+  position: absolute; left: 0;
+  color: var(--lw-gold);
+  font-size: 10px;
+  top: 6px;
+}
+
+.lw-solar-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 44px;
+  color: var(--lw-white);
+  line-height: 1;
+}
+.lw-solar-labour {
+  font-size: 13px;
+  color: var(--lw-gold);
+  font-weight: 600;
+  margin-top: 2px;
+}
+.lw-solar-powers {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  font-size: 12px;
+  color: rgba(136,153,170,0.8);
+  line-height: 1.6;
+}
+
+/* ── REPAIRS ───────────────────────────────────────────────── */
+.lw-repairs-visual {
+  background: linear-gradient(135deg, var(--lw-navy-light), #0c1c38);
+  border: 1px solid rgba(204,32,32,0.28);
+  border-radius: 8px;
+  padding: 56px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.lw-repairs-visual::before {
+  content: '';
+  position: absolute; top:-90px; left:-90px;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(204,32,32,0.1) 0%, transparent 70%);
+}
+.lw-repairs-from {
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: var(--lw-grey);
+  margin-bottom: 4px;
+}
+.lw-repairs-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 100px;
+  line-height: 1;
+  color: var(--lw-red);
+  position: relative;
+}
+
+.lw-repair-list {
+  list-style: none;
+  padding: 0; margin: 0;
+}
+.lw-repair-list li {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  color: var(--lw-white);
+}
+.lw-repair-list li:last-child { border-bottom: none; }
+
+/* ── TESTIMONIALS ──────────────────────────────────────────── */
+.lw-testimonial {
+  background: var(--lw-navy-mid);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  padding: 28px 24px;
+  height: 100%;
+}
+.lw-testimonial-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--lw-grey);
+  font-style: italic;
+  margin-bottom: 16px;
+}
+.lw-testimonial-author {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--lw-white);
+}
+
+/* ── CTA BANNER ────────────────────────────────────────────── */
+.lw-cta-banner {
+  padding: var(--lw-section-pad) 0;
+  background: linear-gradient(160deg, var(--lw-navy-light) 0%, var(--lw-navy) 100%);
+  position: relative;
+  overflow: hidden;
+}
+.lw-cta-banner::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 60% at 50% 0%, rgba(240,192,48,0.06) 0%, transparent 70%);
+}
+.lw-cta-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(38px, 6vw, 80px);
+  color: var(--lw-white);
+  position: relative;
+}
+.lw-cta-sub {
+  font-size: 17px;
+  color: var(--lw-grey);
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.7;
+  position: relative;
+}
+
+/* ── PAGE HEADER ───────────────────────────────────────────── */
+.lw-page-header {
+  padding: 110px 5vw 60px;
+  background: linear-gradient(160deg, var(--lw-navy-mid), var(--lw-navy));
+  border-bottom: 1px solid rgba(240,192,48,0.12);
+}
+.lw-page-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 7vw, 90px);
+  line-height: 0.95;
+  color: var(--lw-white);
+  margin-bottom: 12px;
+}
+.lw-page-sub {
+  font-size: 16px;
+  color: var(--lw-grey);
+  max-width: 500px;
+}
+
+/* ── CONTACT ───────────────────────────────────────────────── */
+.lw-contact-heading {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--lw-white);
+}
+.lw-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 22px;
+  background: var(--lw-navy-mid);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: border-color 0.2s, transform 0.2s;
+  color: var(--lw-white);
+}
+.lw-contact-item:hover {
+  border-color: var(--lw-gold);
+  transform: translateX(6px);
+  color: var(--lw-white);
+}
+.lw-contact-item small {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--lw-gold);
+  margin-bottom: 2px;
+}
+.lw-contact-item strong { font-size: 14px; }
+.lw-contact-icon {
+  width: 44px; height: 44px;
+  background: rgba(240,192,48,0.1);
+  border: 1px solid rgba(240,192,48,0.22);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  color: var(--lw-gold);
+  flex-shrink: 0;
+}
+
+/* Form */
+.lw-form-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--lw-grey);
+  display: block;
+  margin-bottom: 6px;
+}
+.form-control, .form-select {
+  background: var(--lw-navy-mid) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 4px !important;
+  padding: 12px 16px !important;
+  color: var(--lw-white) !important;
+  font-family: 'Barlow', sans-serif !important;
+  font-size: 14px !important;
+}
+.form-control:focus, .form-select:focus {
+  border-color: var(--lw-gold) !important;
+  box-shadow: 0 0 0 3px rgba(240,192,48,0.12) !important;
+}
+.form-select option { background: var(--lw-navy-mid); }
+.lw-form-error { color: #ff6b6b; font-size: 12px; margin-top: 4px; }
+
+/* Success */
+.lw-success-icon { font-size: 80px; }
+
+/* ── FOOTER ────────────────────────────────────────────────── */
+.lw-footer {
+  background: #060e1a;
+  padding: 64px 0 32px;
+  border-top: 1px solid rgba(240,192,48,0.14);
+}
+.lw-footer-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 2px;
+  color: var(--lw-gold);
+}
+.lw-footer-tagline {
+  font-style: italic;
+  color: var(--lw-grey);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.lw-footer-desc { font-size: 13px; color: var(--lw-grey); line-height: 1.7; }
+
+.lw-footer-heading {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--lw-gold);
+  margin-bottom: 16px;
+}
+
+.lw-footer-links {
+  list-style: none;
+  padding: 0; margin: 0;
+}
+.lw-footer-links li { margin-bottom: 8px; }
+.lw-footer-links a {
+  color: var(--lw-grey);
+  text-decoration: none;
+  font-size: 13px;
+  transition: color 0.2s;
+}
+.lw-footer-links a:hover { color: var(--lw-gold); }
+
+.lw-footer-contact {
+  list-style: none;
+  padding: 0; margin: 0;
+}
+.lw-footer-contact li { margin-bottom: 10px; font-size: 13px; color: var(--lw-grey); }
+.lw-footer-contact a { color: var(--lw-grey); text-decoration: none; }
+.lw-footer-contact a:hover { color: var(--lw-gold); }
+
+.lw-footer-divider {
+  border-color: rgba(255,255,255,0.08);
+  margin: 40px 0 24px;
+}
+.lw-footer-copy { font-size: 12px; color: var(--lw-grey); }
+
+/* ── SCROLL REVEAL ─────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── RESPONSIVE ────────────────────────────────────────────── */
+@media (max-width: 991px) {
+  :root { --lw-section-pad: 60px; }
+  .lw-navbar .navbar-collapse {
+    background: rgba(10,22,40,0.98);
+    padding: 16px 20px;
+    margin-top: 8px;
+    border: 1px solid rgba(240,192,48,0.15);
+    border-radius: 6px;
+  }
+}
+
+@media (max-width: 575px) {
+  .lw-stats-row { gap: 20px; }
+  .lw-repairs-price { font-size: 72px; }
+}
