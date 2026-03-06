@@ -83,7 +83,11 @@ USE_TZ = True
 # ── STATIC FILES (WhiteNoise for Vercel) ─────────────────────────────────────
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+
+# Only include if the folder actually exists (avoids Vercel build errors)
+_static_dir = BASE_DIR / 'static'
+STATICFILES_DIRS = [_static_dir] if _static_dir.exists() else []
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # ── MEDIA FILES (Backblaze B2) ────────────────────────────────────────────────
