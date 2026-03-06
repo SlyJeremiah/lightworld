@@ -1,0 +1,87 @@
+{% comment %}Shown when no solar packages in DB yet{% endcomment %}
+{% for pkg in default_solar %}
+<div class="col-sm-6 col-xl-3 reveal">
+  <div class="lw-solar-card {% if pkg.featured %}lw-solar-featured{% endif %}">
+    {% if pkg.featured %}<div class="lw-popular-badge">POPULAR</div>{% endif %}
+    <div class="lw-solar-header">
+      <div class="lw-kva">{{ pkg.kva }}</div>
+      <div class="lw-kva-sub">{{ pkg.label }}</div>
+    </div>
+    <div class="lw-solar-body">
+      <ul class="lw-features">
+        {% for f in pkg.features %}<li>{{ f }}</li>{% endfor %}
+      </ul>
+      <div class="lw-solar-price">${{ pkg.price }}</div>
+      <div class="lw-solar-labour">+ ${{ pkg.labour }} Labour</div>
+      <div class="lw-solar-powers">{{ pkg.powers }}</div>
+      <a href="{% url 'contact:contact' %}" class="btn lw-btn-outline-sm w-100 mt-3">Get Quote</a>
+    </div>
+  </div>
+</div>
+{% empty %}
+<!-- 1KVA -->
+<div class="col-sm-6 col-xl-3 reveal">
+  <div class="lw-solar-card">
+    <div class="lw-solar-header"><div class="lw-kva">1KVA</div><div class="lw-kva-sub">Entry Package</div></div>
+    <div class="lw-solar-body">
+      <ul class="lw-features">
+        <li>450W Mono Panel × 1</li><li>100AH Lithium Battery × 1</li>
+        <li>1KVA Inverter × 1</li><li>Mounting Kit &amp; Accessories</li>
+        <li>Auto Changeover Switch</li><li>Adjustable Voltage Switcher</li>
+      </ul>
+      <div class="lw-solar-price">$650</div><div class="lw-solar-labour">+ $100 Labour</div>
+      <div class="lw-solar-powers">5 Lights · TV · Radio · Laptop · Phone Charging</div>
+      <a href="{% url 'contact:contact' %}" class="btn lw-btn-outline-sm w-100 mt-3">Get Quote</a>
+    </div>
+  </div>
+</div>
+<!-- 3KVA -->
+<div class="col-sm-6 col-xl-3 reveal">
+  <div class="lw-solar-card lw-solar-featured">
+    <div class="lw-popular-badge">POPULAR</div>
+    <div class="lw-solar-header"><div class="lw-kva">3KVA</div><div class="lw-kva-sub">Popular Package</div></div>
+    <div class="lw-solar-body">
+      <ul class="lw-features">
+        <li>3KVA Hybrid Inverter</li><li>24V 100AH Lithium Ion Battery</li>
+        <li>3 × 550W Canadian Solar Panels</li><li>Mounting Kit &amp; Accessories</li>
+        <li>Auto Changeover Switch</li><li>Adjustable Voltage Switcher</li>
+      </ul>
+      <div class="lw-solar-price">$850</div><div class="lw-solar-labour">+ $150 Labour</div>
+      <div class="lw-solar-powers">Fridge · TV · Radio · WiFi · CCTVs · Lights · Washing Machine · Laptops · Printers</div>
+      <a href="{% url 'contact:contact' %}" class="btn lw-btn-outline-sm w-100 mt-3">Get Quote</a>
+    </div>
+  </div>
+</div>
+<!-- 6.2KVA -->
+<div class="col-sm-6 col-xl-3 reveal">
+  <div class="lw-solar-card">
+    <div class="lw-solar-header"><div class="lw-kva">6.2KVA</div><div class="lw-kva-sub">Heavy Duty</div></div>
+    <div class="lw-solar-body">
+      <ul class="lw-features">
+        <li>6.2KVA Hybrid Inverter</li><li>48V 100AH Lithium Ion Battery</li>
+        <li>6 × 550W Canadian Solar Panels</li><li>Mounting Kit &amp; Accessories</li>
+        <li>Auto Changeover Switch</li><li>Adjustable Voltage Switcher</li>
+      </ul>
+      <div class="lw-solar-price">$1,500</div><div class="lw-solar-labour">+ $200 Labour</div>
+      <div class="lw-solar-powers">Upright Fridge · Deep Freezer · TV · WiFi · CCTVs · Washing Machine · Borehole Pump</div>
+      <a href="{% url 'contact:contact' %}" class="btn lw-btn-outline-sm w-100 mt-3">Get Quote</a>
+    </div>
+  </div>
+</div>
+<!-- 10KVA -->
+<div class="col-sm-6 col-xl-3 reveal">
+  <div class="lw-solar-card">
+    <div class="lw-solar-header"><div class="lw-kva">10KVA</div><div class="lw-kva-sub">Commercial Grade</div></div>
+    <div class="lw-solar-body">
+      <ul class="lw-features">
+        <li>10KVA Hybrid Inverter</li><li>2 × 48V 200AH Lithium Ion Battery</li>
+        <li>12 × 550W Canadian Solar Panels</li><li>Mounting Kit &amp; Accessories</li>
+        <li>Auto Changeover Switch</li><li>Adjustable Voltage Switcher</li>
+      </ul>
+      <div class="lw-solar-price">$3,150</div><div class="lw-solar-labour">+ $250 Labour</div>
+      <div class="lw-solar-powers">All of above + heavy commercial loads</div>
+      <a href="{% url 'contact:contact' %}" class="btn lw-btn-outline-sm w-100 mt-3">Get Quote</a>
+    </div>
+  </div>
+</div>
+{% endfor %}

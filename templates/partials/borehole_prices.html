@@ -1,0 +1,28 @@
+{% comment %}Fallback static borehole pricing when no DB data exists{% endcomment %}
+{% for item in bh_items %}
+<div class="lw-price-row">
+  <div class="lw-price-label"><span class="lw-price-icon">{{ item.0 }}</span>{{ item.1 }}</div>
+  <div class="lw-price-tag">{{ item.2 }}</div>
+</div>
+{% empty %}
+<div class="lw-price-row">
+  <div class="lw-price-label"><span class="lw-price-icon">⛏️</span>Borehole Drilling (40m)</div>
+  <div class="lw-price-tag">$800</div>
+</div>
+<div class="lw-price-row">
+  <div class="lw-price-label"><span class="lw-price-icon">📏</span>Extra Meters (per m)</div>
+  <div class="lw-price-tag">$25/m</div>
+</div>
+<div class="lw-price-row">
+  <div class="lw-price-label"><span class="lw-price-icon">🔩</span>Double Casing (per m)</div>
+  <div class="lw-price-tag">$24/m</div>
+</div>
+<div class="lw-price-row">
+  <div class="lw-price-label"><span class="lw-price-icon">⚡</span>Electric Installation</div>
+  <div class="lw-price-tag">$1,900</div>
+</div>
+<div class="lw-price-row">
+  <div class="lw-price-label"><span class="lw-price-icon">☀️</span>Solar Installation</div>
+  <div class="lw-price-tag">$2,000</div>
+</div>
+{% endfor %}

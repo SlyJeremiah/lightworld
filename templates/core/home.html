@@ -1,0 +1,220 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Light World Engineering – Borehole Drilling & Solar Zimbabwe{% endblock %}
+
+{% block content %}
+
+<!-- ── HERO ── -->
+<section class="lw-hero">
+  <div class="lw-hero-bg"></div>
+  <div class="container position-relative">
+    <div class="row align-items-center min-vh-100 py-5">
+      <div class="col-lg-7 col-xl-6">
+        <div class="lw-badge mb-4 reveal">Everywhere to Anyone</div>
+        <h1 class="lw-hero-title reveal">
+          LIGHT <span class="text-warning">WORLD</span><br>
+          <span class="lw-hero-sub-word">ENGINEERING</span>
+        </h1>
+        <p class="lw-hero-desc reveal">
+          Zimbabwe's trusted specialists in borehole drilling, solar system installation,
+          and water engineering — from site survey through to full commissioning.
+        </p>
+        <div class="d-flex flex-wrap gap-3 mt-4 reveal">
+          <a href="{% url 'contact:contact' %}" class="btn lw-btn-gold btn-lg px-5">Get a Free Quote</a>
+          <a href="{% url 'services:list' %}" class="btn lw-btn-outline btn-lg px-5">Our Services</a>
+        </div>
+
+        <!-- Stats row -->
+        <div class="lw-stats-row mt-5 pt-4 reveal">
+          <div class="lw-stat">
+            <span class="lw-stat-num">$80</span>
+            <span class="lw-stat-label">Site Survey</span>
+          </div>
+          <div class="lw-stat">
+            <span class="lw-stat-num">$800</span>
+            <span class="lw-stat-label">Borehole Drilling</span>
+          </div>
+          <div class="lw-stat">
+            <span class="lw-stat-num">$650</span>
+            <span class="lw-stat-label">Solar from</span>
+          </div>
+          <div class="lw-stat">
+            <span class="lw-stat-num">$160</span>
+            <span class="lw-stat-label">Repairs from</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICES GRID ── -->
+<section class="lw-section bg-lw-navy" id="services">
+  <div class="container">
+    <div class="lw-section-header reveal">
+      <span class="lw-section-label">What We Do</span>
+      <h2 class="lw-section-title">OUR SERVICES</h2>
+      <p class="lw-section-desc">Comprehensive engineering solutions for residential, commercial, and agricultural clients across Zimbabwe.</p>
+    </div>
+    <div class="row g-3">
+      {% include "partials/service_card.html" with icon="🔍" name="Site Survey" desc="Geophysical survey to identify the best borehole location on your property before drilling begins." price="$80" unit="flat rate" url_name="services:list" %}
+      {% include "partials/service_card.html" with icon="⛏️" name="Borehole Drilling" desc="Expert borehole drilling with industry-grade equipment, covering 40m standard depth as base price." price="$800" unit="base (40m)" url_name="services:borehole" %}
+      {% include "partials/service_card.html" with icon="💧" name="Borehole Installation" desc="Full pump, 5000L tank, 3.5m stand, pressure tank & 2 water taps. Electric or solar powered." price="$1,900" unit="electric / $2,000 solar" url_name="services:list" %}
+      {% include "partials/service_card.html" with icon="☀️" name="Solar Systems" desc="Hybrid solar from 1KVA to 10KVA. Canadian panels, lithium batteries, automatic changeover switch." price="from $650" unit="" url_name="services:solar" %}
+      {% include "partials/service_card.html" with icon="🔧" name="Borehole Repairs" desc="Pump fishouts, borehole flushing, deepening and all repairs to restore your water supply." price="from $160" unit="" url_name="services:list" %}
+      {% include "partials/service_card.html" with icon="📋" name="Assessments" desc="Technical assessments and reports for boreholes, solar systems, and water infrastructure." price="Call us" unit="" url_name="contact:contact" %}
+    </div>
+  </div>
+</section>
+
+<!-- ── SURVEY STRIP ── -->
+<div class="lw-survey-strip reveal">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+      <div>
+        <div class="lw-strip-title">Site Survey – Know Before You Drill</div>
+        <div class="lw-strip-sub">Geophysical survey pinpoints the best borehole location</div>
+      </div>
+      <div class="lw-strip-price">$80</div>
+      <a href="{% url 'contact:contact' %}" class="btn lw-btn-gold px-5">Book Survey</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── BOREHOLE PRICING ── -->
+<section class="lw-section bg-lw-mid" id="borehole">
+  <div class="container">
+    <div class="row gy-5 align-items-start">
+      <div class="col-lg-5 reveal">
+        <span class="lw-section-label">Borehole Drilling Promo</span>
+        <h2 class="lw-section-title">WATER<br>SOLUTIONS</h2>
+        <p class="lw-section-desc">From drilling to full installation, we handle the entire process. Base drilling covers 40m — additional meters and double casing available.</p>
+        <a href="{% url 'services:borehole' %}" class="btn lw-btn-gold mt-2">Full Pricing Details</a>
+      </div>
+      <div class="col-lg-7 reveal">
+        <div class="lw-price-card">
+          {% for item in borehole_items %}
+          <div class="lw-price-row">
+            <div class="lw-price-label"><span class="lw-price-icon">{{ item.icon }}</span>{{ item.name }}</div>
+            <div class="lw-price-tag">{{ item.price }}</div>
+          </div>
+          {% empty %}
+          {% include "partials/borehole_prices.html" %}
+          {% endfor %}
+          <div class="lw-price-note mt-3">
+            <small class="text-muted d-block mb-1">INSTALLATION INCLUDES</small>
+            <span class="lw-incl-text">2HP Submersible Pump · 5000L Tank · 3.5m Stand · Pressure Tank · 2 Water Taps</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SOLAR PACKAGES ── -->
+<section class="lw-section bg-lw-navy" id="solar">
+  <div class="container">
+    <div class="lw-section-header reveal">
+      <span class="lw-section-label">Special Promo</span>
+      <h2 class="lw-section-title">SOLAR SYSTEM PACKAGES</h2>
+      <p class="lw-section-desc">Hybrid inverter systems with Canadian solar panels and lithium-ion batteries. All packages include mounting kit, accessories, auto changeover &amp; voltage switcher.</p>
+    </div>
+    <div class="row g-4">
+      {% for pkg in solar_packages %}
+      <div class="col-sm-6 col-xl-3 reveal">
+        <div class="lw-solar-card {% if pkg.is_featured %}lw-solar-featured{% endif %}">
+          {% if pkg.is_featured %}<div class="lw-popular-badge">POPULAR</div>{% endif %}
+          <div class="lw-solar-header">
+            <div class="lw-kva">{{ pkg.kva_label|default:pkg.name }}</div>
+            <div class="lw-kva-sub">{{ pkg.service.name }}</div>
+          </div>
+          <div class="lw-solar-body">
+            <ul class="lw-features">
+              {% for feat in pkg.get_features_list %}
+              <li>{{ feat }}</li>
+              {% endfor %}
+            </ul>
+            <div class="lw-solar-price">${{ pkg.base_price|floatformat:0 }}</div>
+            <div class="lw-solar-labour">+ ${{ pkg.labour_price|floatformat:0 }} Labour</div>
+            {% if pkg.powers %}
+            <div class="lw-solar-powers">{{ pkg.powers }}</div>
+            {% endif %}
+            <a href="{% url 'contact:contact' %}" class="btn lw-btn-outline-sm w-100 mt-3">Get Quote</a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      {% include "partials/solar_fallback.html" %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ── REPAIRS ── -->
+<section class="lw-section bg-lw-mid">
+  <div class="container">
+    <div class="row gy-5 align-items-center">
+      <div class="col-lg-5 reveal">
+        <div class="lw-repairs-visual">
+          <div class="lw-repairs-from">FROM</div>
+          <div class="lw-repairs-price">$160</div>
+          <div class="text-muted small mt-2">Starting price for all borehole repair services</div>
+        </div>
+      </div>
+      <div class="col-lg-7 reveal">
+        <span class="lw-section-label">Repair Services</span>
+        <h2 class="lw-section-title">BOREHOLE<br>REPAIRS</h2>
+        <p class="lw-section-desc">Fast, professional borehole repair and maintenance services. We restore your water source to full capacity.</p>
+        <ul class="lw-repair-list">
+          <li><i class="bi bi-gear-fill text-warning me-2"></i>Borehole Repairs</li>
+          <li><i class="bi bi-gear-fill text-warning me-2"></i>Pump Fishouts</li>
+          <li><i class="bi bi-gear-fill text-warning me-2"></i>Borehole Flushing</li>
+          <li><i class="bi bi-gear-fill text-warning me-2"></i>Borehole Deepening</li>
+        </ul>
+        <a href="{% url 'contact:contact' %}?service=repair" class="btn lw-btn-gold mt-3">Book a Repair</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+{% if testimonials %}
+<section class="lw-section bg-lw-navy">
+  <div class="container">
+    <div class="lw-section-header reveal">
+      <span class="lw-section-label">Client Feedback</span>
+      <h2 class="lw-section-title">WHAT OUR CLIENTS SAY</h2>
+    </div>
+    <div class="row g-4">
+      {% for t in testimonials %}
+      <div class="col-md-6 col-lg-4 reveal">
+        <div class="lw-testimonial">
+          <div class="lw-stars mb-2">
+            {% for i in "12345" %}{% if forloop.counter <= t.rating %}⭐{% endif %}{% endfor %}
+          </div>
+          <p class="lw-testimonial-text">"{{ t.message }}"</p>
+          <div class="lw-testimonial-author">— {{ t.name }}{% if t.location %}, <em>{{ t.location }}</em>{% endif %}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ── CTA BANNER ── -->
+<section class="lw-cta-banner">
+  <div class="container text-center">
+    <h2 class="lw-cta-title reveal">READY TO GET STARTED?</h2>
+    <p class="lw-cta-sub reveal">Contact us today for a free consultation and competitive quote.</p>
+    <div class="d-flex flex-wrap justify-content-center gap-3 mt-4 reveal">
+      <a href="{% url 'contact:contact' %}" class="btn lw-btn-gold btn-lg px-5">Get a Free Quote</a>
+      <a href="tel:{{ COMPANY.phone }}" class="btn lw-btn-outline btn-lg px-5">
+        <i class="bi bi-telephone me-2"></i>{{ COMPANY.phone }}
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

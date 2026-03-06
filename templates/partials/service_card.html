@@ -1,0 +1,14 @@
+<div class="col-md-6 col-lg-4 reveal">
+  <div class="lw-service-card h-100">
+    <div class="lw-service-icon">{{ icon }}</div>
+    <div class="lw-service-name">{{ name }}</div>
+    <div class="lw-service-desc">{{ desc }}</div>
+    <div class="lw-service-price">
+      {{ price }}
+      {% if unit %}<small>{{ unit }}</small>{% endif %}
+    </div>
+    <a href="{% url url_name %}" class="lw-service-link mt-auto">
+      Learn more <i class="bi bi-arrow-right ms-1"></i>
+    </a>
+  </div>
+</div>

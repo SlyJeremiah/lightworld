@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Contact Us – Light World Engineering{% endblock %}
+
+{% block content %}
+<div class="lw-page-header">
+  <div class="container">
+    <span class="lw-section-label">Get In Touch</span>
+    <h1 class="lw-page-title">CONTACT US</h1>
+    <p class="lw-page-sub">Ready to start your project? We'll get back to you with a detailed quote.</p>
+  </div>
+</div>
+
+<section class="lw-section bg-lw-navy">
+  <div class="container">
+    <div class="row gy-5">
+
+      <!-- Contact Info -->
+      <div class="col-lg-4">
+        <h4 class="lw-contact-heading mb-4">Reach Us Directly</h4>
+        <div class="d-flex flex-column gap-3">
+          <a href="tel:{{ COMPANY.phone }}" class="lw-contact-item">
+            <div class="lw-contact-icon"><i class="bi bi-telephone-fill"></i></div>
+            <div>
+              <small>Phone</small>
+              <strong>{{ COMPANY.phone }}</strong>
+            </div>
+          </a>
+          <a href="mailto:{{ COMPANY.email }}" class="lw-contact-item">
+            <div class="lw-contact-icon"><i class="bi bi-envelope-fill"></i></div>
+            <div>
+              <small>Email</small>
+              <strong>{{ COMPANY.email }}</strong>
+            </div>
+          </a>
+          <a href="mailto:{{ COMPANY.email_alt }}" class="lw-contact-item">
+            <div class="lw-contact-icon"><i class="bi bi-envelope"></i></div>
+            <div>
+              <small>Alt Email</small>
+              <strong>{{ COMPANY.email_alt }}</strong>
+            </div>
+          </a>
+          <a href="{{ COMPANY.facebook_url }}" target="_blank" class="lw-contact-item">
+            <div class="lw-contact-icon"><i class="bi bi-facebook"></i></div>
+            <div>
+              <small>Facebook</small>
+              <strong>{{ COMPANY.facebook }}</strong>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="col-lg-8">
+        <h4 class="lw-contact-heading mb-4">Send an Enquiry</h4>
+        <form method="post" novalidate>
+          {% csrf_token %}
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label class="lw-form-label">First Name *</label>
+              {{ form.first_name }}
+              {% if form.first_name.errors %}
+              <div class="lw-form-error">{{ form.first_name.errors.0 }}</div>
+              {% endif %}
+            </div>
+            <div class="col-sm-6">
+              <label class="lw-form-label">Last Name *</label>
+              {{ form.last_name }}
+              {% if form.last_name.errors %}
+              <div class="lw-form-error">{{ form.last_name.errors.0 }}</div>
+              {% endif %}
+            </div>
+            <div class="col-sm-6">
+              <label class="lw-form-label">Phone Number *</label>
+              {{ form.phone }}
+              {% if form.phone.errors %}
+              <div class="lw-form-error">{{ form.phone.errors.0 }}</div>
+              {% endif %}
+            </div>
+            <div class="col-sm-6">
+              <label class="lw-form-label">Email</label>
+              {{ form.email }}
+            </div>
+            <div class="col-12">
+              <label class="lw-form-label">Service Required *</label>
+              {{ form.service }}
+              {% if form.service.errors %}
+              <div class="lw-form-error">{{ form.service.errors.0 }}</div>
+              {% endif %}
+            </div>
+            <div class="col-12">
+              <label class="lw-form-label">Your Location / Area</label>
+              {{ form.location }}
+            </div>
+            <div class="col-12">
+              <label class="lw-form-label">Message / Additional Details</label>
+              {{ form.message }}
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn lw-btn-gold btn-lg px-5">
+                Send Enquiry <i class="bi bi-arrow-right ms-2"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}
