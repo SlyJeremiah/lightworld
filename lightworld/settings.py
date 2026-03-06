@@ -20,9 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Third party
     'storages',
-    # Local
     'core',
     'services',
     'contact',
@@ -60,11 +58,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'lightworld.wsgi.application'
 
-# ── DATABASE (PostgreSQL) ─────────────────────────────────────────────────────
-DATABASE_URL = config('DATABASE_URL', default='sqlite:///db.sqlite3')
-DATABASES = {
-    'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)
-}
+# ── DATABASE ──────────────────────────────────────────────────────────────────
+DATABASE_URL = config('DATABASE_URL', default='')
+
+if DATABASE_URL and DATABASE_URL.startswith('postgres'):
+    DATABASES = {
+        'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # ── AUTH ──────────────────────────────────────────────────────────────────────
 AUTH_PASSWORD_VALIDATORS = [
@@ -80,19 +87,11 @@ TIME_ZONE = 'Africa/Harare'
 USE_I18N = True
 USE_TZ = True
 
-# ── STATIC FILES (WhiteNoise for Vercel) ─────────────────────────────────────
+# ── STATIC FILES ─────────────────────────────────────────────────────────────
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
 _static_dir = BASE_DIR / 'static'
 STATICFILES_DIRS = [_static_dir] if _static_dir.exists() else []
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# Only include if the folder actually exists (avoids Vercel build errors)
-_static_dir = BASE_DIR / 'static'
-STATICFILES_DIRS = [_static_dir] if _static_dir.exists() else []
-
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # ── MEDIA FILES (Backblaze B2) ────────────────────────────────────────────────
@@ -103,7 +102,7 @@ if USE_B2_STORAGE:
     AWS_ACCESS_KEY_ID = config('B2_KEY_ID')
     AWS_SECRET_ACCESS_KEY = config('B2_APPLICATION_KEY')
     AWS_STORAGE_BUCKET_NAME = config('B2_BUCKET_NAME')
-    AWS_S3_ENDPOINT_URL = config('B2_ENDPOINT_URL')   # e.g. https://s3.us-west-002.backblazeb2.com
+    AWS_S3_ENDPOINT_URL = config('B2_ENDPOINT_URL')
     AWS_S3_REGION_NAME = config('B2_REGION', default='us-west-002')
     AWS_DEFAULT_ACL = 'public-read'
     AWS_S3_SIGNATURE_VERSION = 's3v4'
@@ -127,10 +126,8 @@ GOOGLE_ANALYTICS_ID = config('GOOGLE_ANALYTICS_ID', default='')
 
 # ── SECURITY (production) ─────────────────────────────────────────────────────
 if not DEBUG:
-    SECURE_SSL_REDIRECT = True
-    SECURE_HSTS_SECONDS = 31536000
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
+    SECURE_SSL_REDIRECT = False
+    SECURE_HSTS_SECONDS = 0
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
 
