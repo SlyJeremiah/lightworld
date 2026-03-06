@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e  # exit immediately on any error
+set -e
 
 echo "Installing dependencies..."
 pip install -r requirements.txt
