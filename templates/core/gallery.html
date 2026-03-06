@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Gallery{% endblock %}
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <h1 class="text-center mb-5">Our Work</h1>
+    <div class="row g-3">
+      <div class="col-md-4"><img src="{% static 'img/641583358_895161573491329_3204533064711458111_n.jpeg' %}" class="img-fluid rounded shadow" alt="Borehole Drilling"></div>
+      <div class="col-md-4"><img src="{% static 'img/592903966_829161743424646_1608025319837431502_n.jpeg' %}" class="img-fluid rounded shadow" alt="Light World Engineering"></div>
+      <div class="col-md-4"><img src="{% static 'img/642148213_898708903136596_8789494646828816813_n.jpeg' %}" class="img-fluid rounded shadow" alt="Solar Installation"></div>
+      <div class="col-md-4"><img src="{% static 'img/639765987_892602987080521_5238803597517677225_n.jpeg' %}" class="img-fluid rounded shadow" alt="Site Survey"></div>
+      <div class="col-md-4"><img src="{% static 'img/629757603_885052081168945_9011226337966404936_n.jpeg' %}" class="img-fluid rounded shadow" alt="Borehole Installation"></div>
+      <div class="col-md-4"><img src="{% static 'img/light_world.jpeg' %}" class="img-fluid rounded shadow" alt="Light World Engineering"></div>
+    </div>
+  </div>
+</section>
+{% endblock %}
