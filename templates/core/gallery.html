@@ -1,18 +1,75 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Gallery{% endblock %}
+{% block title %}Gallery - Light World Engineering{% endblock %}
 {% block content %}
+
 <section class="py-5">
   <div class="container">
-    <h1 class="text-center mb-5">Our Work</h1>
+    <h1 class="text-center mb-2">Our Work</h1>
+    <p class="text-center text-muted mb-5">See our borehole drilling, solar installations and site surveys across Zimbabwe</p>
+
+    {% if items %}
     <div class="row g-3">
-      <div class="col-md-4"><img src="{% static 'img/641583358_895161573491329_3204533064711458111_n.jpeg' %}" class="img-fluid rounded shadow" alt="Borehole Drilling"></div>
-      <div class="col-md-4"><img src="{% static 'img/592903966_829161743424646_1608025319837431502_n.jpeg' %}" class="img-fluid rounded shadow" alt="Light World Engineering"></div>
-      <div class="col-md-4"><img src="{% static 'img/642148213_898708903136596_8789494646828816813_n.jpeg' %}" class="img-fluid rounded shadow" alt="Solar Installation"></div>
-      <div class="col-md-4"><img src="{% static 'img/639765987_892602987080521_5238803597517677225_n.jpeg' %}" class="img-fluid rounded shadow" alt="Site Survey"></div>
-      <div class="col-md-4"><img src="{% static 'img/629757603_885052081168945_9011226337966404936_n.jpeg' %}" class="img-fluid rounded shadow" alt="Borehole Installation"></div>
-      <div class="col-md-4"><img src="{% static 'img/light_world.jpeg' %}" class="img-fluid rounded shadow" alt="Light World Engineering"></div>
+      {% for item in items %}
+        <div class="col-md-4 col-sm-6">
+          <div class="card border-0 shadow-sm h-100">
+            {% if item.media_type == 'video' and item.video_url %}
+              <div class="ratio ratio-16x9">
+                {% if 'youtube.com' in item.video_url or 'youtu.be' in item.video_url %}
+                  {% with item.video_url as url %}
+                  <iframe
+                    src="https://www.youtube.com/embed/{{ url|slice:'-11:' }}"
+                    title="{{ item.title }}"
+                    allowfullscreen>
+                  </iframe>
+                  {% endwith %}
+                {% else %}
+                  <video controls class="w-100">
+                    <source src="{{ item.video_url }}">
+                  </video>
+                {% endif %}
+              </div>
+            {% elif item.image %}
+              <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.title }}"
+                   style="height:220px; object-fit:cover; cursor:pointer;"
+                   data-bs-toggle="modal" data-bs-target="#imgModal{{ item.pk }}">
+            {% endif %}
+            {% if item.title or item.caption %}
+            <div class="card-body p-2">
+              {% if item.title %}<p class="fw-semibold mb-0 small">{{ item.title }}</p>{% endif %}
+              {% if item.caption %}<p class="text-muted small mb-0">{{ item.caption }}</p>{% endif %}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+
+        {# Lightbox modal for images #}
+        {% if item.media_type == 'image' and item.image %}
+        <div class="modal fade" id="imgModal{{ item.pk }}" tabindex="-1">
+          <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content bg-dark border-0">
+              <div class="modal-header border-0 pb-0">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body text-center p-2">
+                <img src="{{ item.image.url }}" class="img-fluid rounded" alt="{{ item.title }}">
+                {% if item.caption %}<p class="text-white mt-2 small">{{ item.caption }}</p>{% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
     </div>
+
+    {% else %}
+    <div class="text-center py-5">
+      <div class="fs-1 mb-3">📸</div>
+      <h4 class="text-muted">No gallery items yet</h4>
+      <p class="text-muted">Check back soon for photos and videos of our work.</p>
+    </div>
+    {% endif %}
+
   </div>
 </section>
 {% endblock %}

@@ -12,7 +12,7 @@ class TestimonialAdmin(admin.ModelAdmin):
 
 @admin.register(GalleryImage)
 class GalleryImageAdmin(admin.ModelAdmin):
-    list_display = ['title', 'category', 'order', 'is_active', 'created_at']
-    list_filter = ['category', 'is_active']
+    list_display = ['title', 'media_type', 'order', 'is_active', 'created_at']
     list_editable = ['order', 'is_active']
+    list_filter = ['media_type', 'is_active']
     search_fields = ['title', 'caption']

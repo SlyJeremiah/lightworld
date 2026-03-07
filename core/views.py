@@ -28,11 +28,5 @@ def about(request):
 
 
 def gallery_view(request):
-    category = request.GET.get('cat', '')
-    images = GalleryImage.objects.filter(is_active=True)
-    if category:
-        images = images.filter(category=category)
-    return render(request, 'core/gallery.html', {
-        'images': images,
-        'active_cat': category,
-    })
+    items = GalleryImage.objects.filter(is_active=True)
+    return render(request, 'core/gallery.html', {'items': items})

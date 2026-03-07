@@ -17,17 +17,12 @@ class Testimonial(models.Model):
 
 
 class GalleryImage(models.Model):
-    SERVICE_CHOICES = [
-        ('borehole', 'Borehole'),
-        ('solar', 'Solar'),
-        ('repair', 'Repair'),
-        ('survey', 'Site Survey'),
-        ('other', 'Other'),
-    ]
-    title = models.CharField(max_length=150)
-    image = models.ImageField(upload_to='gallery/')
-    category = models.CharField(max_length=20, choices=SERVICE_CHOICES, default='other')
-    caption = models.CharField(max_length=250, blank=True)
+    MEDIA_TYPES = [('image', 'Image'), ('video', 'Video')]
+    title = models.CharField(max_length=200, blank=True)
+    media_type = models.CharField(max_length=10, choices=MEDIA_TYPES, default='image')
+    image = models.ImageField(upload_to='gallery/', blank=True, null=True)
+    video_url = models.URLField(blank=True, help_text='YouTube or video URL')
+    caption = models.TextField(blank=True)
     order = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -36,4 +31,4 @@ class GalleryImage(models.Model):
         ordering = ['order', '-created_at']
 
     def __str__(self):
-        return self.title
+        return self.title or f'Gallery item {self.pk}'
