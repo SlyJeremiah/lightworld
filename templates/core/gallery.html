@@ -26,7 +26,6 @@
     </div>
 
     <!-- GRID -->
-    {% if images %}
     <div class="row g-3">
       {% for img in images %}
       <div class="col-sm-6 col-md-4 col-lg-3">
@@ -39,17 +38,14 @@
           </div>
         </div>
       </div>
+      {% empty %}
+      <div class="col-12 text-center py-5">
+        <i class="fas fa-camera fa-3x text-muted mb-3 d-block"></i>
+        <h5 class="text-muted">No photos yet</h5>
+        {% if active_cat %}<p><a href="{% url 'core:gallery' %}">View all photos</a></p>{% endif %}
+      </div>
       {% endfor %}
     </div>
-    {% else %}
-    <div class="text-center py-5">
-      <i class="fas fa-camera fa-3x text-muted mb-3"></i>
-      <h5 class="text-muted">No photos yet</h5>
-      {% if active_cat %}
-        <p><a href="{% url 'core:gallery' %}">View all photos</a></p>
-      {% endif %}
-    </div>
-    {% endif %}
 
   </div>
 </section>
