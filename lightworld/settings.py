@@ -105,9 +105,9 @@ if USE_B2_STORAGE:
     AWS_STORAGE_BUCKET_NAME = config('B2_BUCKET_NAME')
     AWS_S3_ENDPOINT_URL = config('B2_ENDPOINT_URL')
     AWS_S3_REGION_NAME = config('B2_REGION', default='us-west-002')
-    AWS_DEFAULT_ACL = 'public-read'        # make files public
+   AWS_DEFAULT_ACL = None
     AWS_S3_SIGNATURE_VERSION = 's3v4'
-    AWS_QUERYSTRING_AUTH = False           # disable signed URLs
+  AWS_QUERYSTRING_AUTH = False
     MEDIA_URL = f"{config('B2_ENDPOINT_URL')}/{config('B2_BUCKET_NAME', default='lightworld-media')}/"
 
 # ── EMAIL (Gmail SMTP) ────────────────────────────────────────────────────────
