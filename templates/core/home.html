@@ -1,47 +1,33 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
-
-{% block title %}Light World Engineering – Borehole Drilling & Solar Zimbabwe{% endblock %}
+{% block title %}Light World Engineering — Borehole Drilling & Solar Zimbabwe{% endblock %}
 
 {% block content %}
 
-<!-- ── HERO ── -->
-<section class="lw-hero">
-  <div class="lw-hero-bg"></div>
-  <div class="container position-relative">
-    <div class="row align-items-center min-vh-100 py-5">
-      <div class="col-lg-7 col-xl-6">
-        <div class="lw-badge mb-4 reveal">Everywhere to Anyone</div>
-        <h1 class="lw-hero-title reveal">
-          LIGHT <span class="text-warning">WORLD</span><br>
-          <span class="lw-hero-sub-word">ENGINEERING</span>
-        </h1>
-        <p class="lw-hero-desc reveal">
-          Zimbabwe's trusted specialists in borehole drilling, solar system installation,
-          and water engineering — from site survey through to full commissioning.
-        </p>
-        <div class="d-flex flex-wrap gap-3 mt-4 reveal">
-          <a href="{% url 'contact:contact' %}" class="btn lw-btn-gold btn-lg px-5">Get a Free Quote</a>
-          <a href="{% url 'services:list' %}" class="btn lw-btn-outline btn-lg px-5">Our Services</a>
+<!-- HERO -->
+<section class="hero-section">
+  <div class="container position-relative" style="z-index:2;">
+    <div class="row align-items-center min-vh-75">
+      <div class="col-lg-7">
+        <span class="hero-badge"><i class="fas fa-certificate me-1"></i> Zimbabwe's Trusted Water & Energy Experts</span>
+        <h1 class="hero-title">Clean Water &<br><span>Solar Power</span><br>For Every Home</h1>
+        <p class="hero-subtitle">Professional borehole drilling, solar system installation, and water solutions delivered everywhere across Zimbabwe.</p>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="/contact/" class="btn-gold"><i class="fas fa-phone-alt me-2"></i>Get Free Quote</a>
+          <a href="/services/" class="btn-outline-white"><i class="fas fa-th-large me-2"></i>Our Services</a>
         </div>
-
-        <!-- Stats row -->
-        <div class="lw-stats-row mt-5 pt-4 reveal">
-          <div class="lw-stat">
-            <span class="lw-stat-num">$80</span>
-            <span class="lw-stat-label">Site Survey</span>
+        <div class="d-flex gap-4 mt-4">
+          <div>
+            <div style="color:var(--gold-light); font-size:1.4rem; font-weight:800; font-family:'Montserrat',sans-serif;">500+</div>
+            <div style="color:rgba(255,255,255,0.65); font-size:0.78rem; text-transform:uppercase; letter-spacing:0.5px;">Boreholes Drilled</div>
           </div>
-          <div class="lw-stat">
-            <span class="lw-stat-num">$800</span>
-            <span class="lw-stat-label">Borehole Drilling</span>
+          <div style="border-left:1px solid rgba(255,255,255,0.2); padding-left:1.5rem;">
+            <div style="color:var(--gold-light); font-size:1.4rem; font-weight:800; font-family:'Montserrat',sans-serif;">10+</div>
+            <div style="color:rgba(255,255,255,0.65); font-size:0.78rem; text-transform:uppercase; letter-spacing:0.5px;">Years Experience</div>
           </div>
-          <div class="lw-stat">
-            <span class="lw-stat-num">$650</span>
-            <span class="lw-stat-label">Solar from</span>
-          </div>
-          <div class="lw-stat">
-            <span class="lw-stat-num">$160</span>
-            <span class="lw-stat-label">Repairs from</span>
+          <div style="border-left:1px solid rgba(255,255,255,0.2); padding-left:1.5rem;">
+            <div style="color:var(--gold-light); font-size:1.4rem; font-weight:800; font-family:'Montserrat',sans-serif;">100%</div>
+            <div style="color:rgba(255,255,255,0.65); font-size:0.78rem; text-transform:uppercase; letter-spacing:0.5px;">Satisfaction</div>
           </div>
         </div>
       </div>
@@ -49,170 +35,159 @@
   </div>
 </section>
 
-<!-- ── SERVICES GRID ── -->
-<section class="lw-section bg-lw-navy" id="services">
+<!-- QUICK PRICING STRIP -->
+<section class="bg-navy py-4">
   <div class="container">
-    <div class="lw-section-header reveal">
-      <span class="lw-section-label">What We Do</span>
-      <h2 class="lw-section-title">OUR SERVICES</h2>
-      <p class="lw-section-desc">Comprehensive engineering solutions for residential, commercial, and agricultural clients across Zimbabwe.</p>
-    </div>
-    <div class="row g-3">
-      {% include "partials/service_card.html" with icon="🔍" name="Site Survey" desc="Geophysical survey to identify the best borehole location on your property before drilling begins." price="$80" unit="flat rate" url_name="services:list" %}
-      {% include "partials/service_card.html" with icon="⛏️" name="Borehole Drilling" desc="Expert borehole drilling with industry-grade equipment, covering 40m standard depth as base price." price="$800" unit="base (40m)" url_name="services:borehole" %}
-      {% include "partials/service_card.html" with icon="💧" name="Borehole Installation" desc="Full pump, 5000L tank, 3.5m stand, pressure tank & 2 water taps. Electric or solar powered." price="$1,900" unit="electric / $2,000 solar" url_name="services:list" %}
-      {% include "partials/service_card.html" with icon="☀️" name="Solar Systems" desc="Hybrid solar from 1KVA to 10KVA. Canadian panels, lithium batteries, automatic changeover switch." price="from $650" unit="" url_name="services:solar" %}
-      {% include "partials/service_card.html" with icon="🔧" name="Borehole Repairs" desc="Pump fishouts, borehole flushing, deepening and all repairs to restore your water supply." price="from $160" unit="" url_name="services:list" %}
-      {% include "partials/service_card.html" with icon="📋" name="Assessments" desc="Technical assessments and reports for boreholes, solar systems, and water infrastructure." price="Call us" unit="" url_name="contact:contact" %}
-    </div>
-  </div>
-</section>
-
-<!-- ── SURVEY STRIP ── -->
-<div class="lw-survey-strip reveal">
-  <div class="container">
-    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
-      <div>
-        <div class="lw-strip-title">Site Survey – Know Before You Drill</div>
-        <div class="lw-strip-sub">Geophysical survey pinpoints the best borehole location</div>
+    <div class="row g-3 text-center">
+      <div class="col-6 col-md-3">
+        <div style="color:rgba(255,255,255,0.55); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px;"><i class="fas fa-search-location me-1" style="color:var(--gold-light);"></i> Site Survey</div>
+        <div style="color:var(--gold-light); font-size:1.5rem; font-weight:800; font-family:'Montserrat',sans-serif;">$80</div>
       </div>
-      <div class="lw-strip-price">$80</div>
-      <a href="{% url 'contact:contact' %}" class="btn lw-btn-gold px-5">Book Survey</a>
-    </div>
-  </div>
-</div>
-
-<!-- ── BOREHOLE PRICING ── -->
-<section class="lw-section bg-lw-mid" id="borehole">
-  <div class="container">
-    <div class="row gy-5 align-items-start">
-      <div class="col-lg-5 reveal">
-        <span class="lw-section-label">Borehole Drilling Promo</span>
-        <h2 class="lw-section-title">WATER<br>SOLUTIONS</h2>
-        <p class="lw-section-desc">From drilling to full installation, we handle the entire process. Base drilling covers 40m — additional meters and double casing available.</p>
-        <a href="{% url 'services:borehole' %}" class="btn lw-btn-gold mt-2">Full Pricing Details</a>
+      <div class="col-6 col-md-3" style="border-left:1px solid rgba(255,255,255,0.1);">
+        <div style="color:rgba(255,255,255,0.55); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px;"><i class="fas fa-water me-1" style="color:var(--gold-light);"></i> Borehole Drilling</div>
+        <div style="color:var(--gold-light); font-size:1.5rem; font-weight:800; font-family:'Montserrat',sans-serif;">$800</div>
       </div>
-      <div class="col-lg-7 reveal">
-        <div class="lw-price-card">
-          {% for item in borehole_items %}
-          <div class="lw-price-row">
-            <div class="lw-price-label"><span class="lw-price-icon">{{ item.icon }}</span>{{ item.name }}</div>
-            <div class="lw-price-tag">{{ item.price }}</div>
-          </div>
-          {% empty %}
-          {% include "partials/borehole_prices.html" %}
-          {% endfor %}
-          <div class="lw-price-note mt-3">
-            <small class="text-muted d-block mb-1">INSTALLATION INCLUDES</small>
-            <span class="lw-incl-text">2HP Submersible Pump · 5000L Tank · 3.5m Stand · Pressure Tank · 2 Water Taps</span>
-          </div>
-        </div>
+      <div class="col-6 col-md-3" style="border-left:1px solid rgba(255,255,255,0.1);">
+        <div style="color:rgba(255,255,255,0.55); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px;"><i class="fas fa-solar-panel me-1" style="color:var(--gold-light);"></i> Solar System</div>
+        <div style="color:var(--gold-light); font-size:1.5rem; font-weight:800; font-family:'Montserrat',sans-serif;">From $650</div>
+      </div>
+      <div class="col-6 col-md-3" style="border-left:1px solid rgba(255,255,255,0.1);">
+        <div style="color:rgba(255,255,255,0.55); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px;"><i class="fas fa-tools me-1" style="color:var(--gold-light);"></i> Repairs</div>
+        <div style="color:var(--gold-light); font-size:1.5rem; font-weight:800; font-family:'Montserrat',sans-serif;">From $160</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── SOLAR PACKAGES ── -->
-<section class="lw-section bg-lw-navy" id="solar">
+<!-- SERVICES -->
+<section class="py-6 bg-light-grey" style="padding: 5rem 0;">
   <div class="container">
-    <div class="lw-section-header reveal">
-      <span class="lw-section-label">Special Promo</span>
-      <h2 class="lw-section-title">SOLAR SYSTEM PACKAGES</h2>
-      <p class="lw-section-desc">Hybrid inverter systems with Canadian solar panels and lithium-ion batteries. All packages include mounting kit, accessories, auto changeover &amp; voltage switcher.</p>
+    <div class="text-center mb-5">
+      <div class="section-tag">What We Do</div>
+      <h2 class="section-title">Complete Water & Energy Solutions</h2>
+      <div class="section-divider"></div>
+      <p class="text-muted mx-auto" style="max-width:540px;">From initial site survey to full installation and ongoing maintenance — we handle everything.</p>
     </div>
     <div class="row g-4">
-      {% for pkg in solar_packages %}
-      <div class="col-sm-6 col-xl-3 reveal">
-        <div class="lw-solar-card {% if pkg.is_featured %}lw-solar-featured{% endif %}">
-          {% if pkg.is_featured %}<div class="lw-popular-badge">POPULAR</div>{% endif %}
-          <div class="lw-solar-header">
-            <div class="lw-kva">{{ pkg.kva_label|default:pkg.name }}</div>
-            <div class="lw-kva-sub">{{ pkg.service.name }}</div>
-          </div>
-          <div class="lw-solar-body">
-            <ul class="lw-features">
-              {% for feat in pkg.get_features_list %}
-              <li>{{ feat }}</li>
-              {% endfor %}
-            </ul>
-            <div class="lw-solar-price">${{ pkg.base_price|floatformat:0 }}</div>
-            <div class="lw-solar-labour">+ ${{ pkg.labour_price|floatformat:0 }} Labour</div>
-            {% if pkg.powers %}
-            <div class="lw-solar-powers">{{ pkg.powers }}</div>
-            {% endif %}
-            <a href="{% url 'contact:contact' %}" class="btn lw-btn-outline-sm w-100 mt-3">Get Quote</a>
-          </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="service-card p-4">
+          <div class="service-card-icon"><i class="fas fa-map-marked-alt"></i></div>
+          <h4 class="text-navy mb-2">Site Survey</h4>
+          <p class="text-muted small mb-3">Geophysical survey using modern equipment to locate the optimal drilling point and estimate water yield.</p>
+          <div class="service-price mb-3">$80</div>
+          <a href="/contact/" class="btn-gold" style="font-size:0.82rem; padding:0.6rem 1.4rem;">Book Survey</a>
         </div>
       </div>
-      {% empty %}
-      {% include "partials/solar_fallback.html" %}
-      {% endfor %}
+      <div class="col-md-6 col-lg-4">
+        <div class="service-card p-4">
+          <div class="service-card-icon"><i class="fas fa-tint"></i></div>
+          <h4 class="text-navy mb-2">Borehole Drilling</h4>
+          <p class="text-muted small mb-3">High-capacity drilling rigs, professional casing, and guaranteed water access for homes and farms.</p>
+          <div class="service-price mb-3">From $800</div>
+          <a href="/services/borehole/" class="btn-gold" style="font-size:0.82rem; padding:0.6rem 1.4rem;">View Pricing</a>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="service-card p-4">
+          <div class="service-card-icon"><i class="fas fa-solar-panel"></i></div>
+          <h4 class="text-navy mb-2">Solar Systems</h4>
+          <p class="text-muted small mb-3">Complete off-grid and hybrid solar packages from 1KVA to 10KVA with Canadian solar panels.</p>
+          <div class="service-price mb-3">From $650</div>
+          <a href="/services/solar/" class="btn-gold" style="font-size:0.82rem; padding:0.6rem 1.4rem;">View Packages</a>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="service-card p-4">
+          <div class="service-card-icon"><i class="fas fa-pump-soap"></i></div>
+          <h4 class="text-navy mb-2">Borehole Installation</h4>
+          <p class="text-muted small mb-3">Full pump, tank and piping installation. Solar or electric powered packages available.</p>
+          <div class="service-price mb-3">From $1,900</div>
+          <a href="/services/borehole/" class="btn-gold" style="font-size:0.82rem; padding:0.6rem 1.4rem;">View Options</a>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="service-card p-4">
+          <div class="service-card-icon"><i class="fas fa-wrench"></i></div>
+          <h4 class="text-navy mb-2">Repairs & Fishouts</h4>
+          <p class="text-muted small mb-3">Pump fishouts, borehole flushing, deepening and full repair service across Zimbabwe.</p>
+          <div class="service-price mb-3">From $160</div>
+          <a href="/contact/" class="btn-gold" style="font-size:0.82rem; padding:0.6rem 1.4rem;">Book Repair</a>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="service-card p-4">
+          <div class="service-card-icon"><i class="fas fa-clipboard-check"></i></div>
+          <h4 class="text-navy mb-2">Assessments</h4>
+          <p class="text-muted small mb-3">Full borehole and solar system assessments. Know your options before you invest.</p>
+          <div class="service-price mb-3">Get Quote</div>
+          <a href="/contact/" class="btn-gold" style="font-size:0.82rem; padding:0.6rem 1.4rem;">Contact Us</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ── REPAIRS ── -->
-<section class="lw-section bg-lw-mid">
+<!-- WHY CHOOSE US (photo background) -->
+<section class="py-5 bg-photo-overlay">
+  <div class="container py-4">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-5">
+        <div class="section-tag" style="color:var(--gold-light);">Why Choose Us</div>
+        <h2 style="color:var(--white); font-size:clamp(1.8rem,3vw,2.4rem); font-weight:800;" class="mb-4">Zimbabwe's Most Trusted Drilling & Solar Experts</h2>
+        <p style="color:rgba(255,255,255,0.8);" class="mb-4">We combine modern equipment, experienced technicians and transparent pricing to deliver water and energy solutions that last.</p>
+        <a href="/contact/" class="btn-gold"><i class="fas fa-phone-alt me-2"></i>Call +263 771 698 755</a>
+      </div>
+      <div class="col-lg-7">
+        <div class="row g-3">
+          <div class="col-sm-6">
+            <div class="info-box">
+              <i class="fas fa-shield-alt fa-2x mb-3"></i>
+              <h5 style="color:var(--white); font-size:1rem;">Guaranteed Results</h5>
+              <p style="color:rgba(255,255,255,0.65); font-size:0.85rem; margin:0;">We don't leave until the job is done right. Your satisfaction is our priority.</p>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="info-box">
+              <i class="fas fa-map-marker-alt fa-2x mb-3"></i>
+              <h5 style="color:var(--white); font-size:1rem;">Nationwide Coverage</h5>
+              <p style="color:rgba(255,255,255,0.65); font-size:0.85rem; margin:0;">We operate everywhere in Zimbabwe — urban, rural, farm or mining.</p>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="info-box">
+              <i class="fas fa-dollar-sign fa-2x mb-3"></i>
+              <h5 style="color:var(--white); font-size:1rem;">Transparent Pricing</h5>
+              <p style="color:rgba(255,255,255,0.65); font-size:0.85rem; margin:0;">No hidden costs. Fixed pricing with detailed breakdowns upfront.</p>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="info-box">
+              <i class="fas fa-headset fa-2x mb-3"></i>
+              <h5 style="color:var(--white); font-size:1rem;">After-Sale Support</h5>
+              <p style="color:rgba(255,255,255,0.65); font-size:0.85rem; margin:0;">We stay available after installation for maintenance and support.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT CTA -->
+<section class="py-5 bg-light-grey">
   <div class="container">
-    <div class="row gy-5 align-items-center">
-      <div class="col-lg-5 reveal">
-        <div class="lw-repairs-visual">
-          <div class="lw-repairs-from">FROM</div>
-          <div class="lw-repairs-price">$160</div>
-          <div class="text-muted small mt-2">Starting price for all borehole repair services</div>
+    <div class="row justify-content-center text-center">
+      <div class="col-lg-7">
+        <div class="section-tag">Get Started Today</div>
+        <h2 class="section-title">Ready for Clean Water & Solar Power?</h2>
+        <div class="section-divider"></div>
+        <p class="text-muted mb-4">Contact us for a free consultation and quote. We serve all provinces across Zimbabwe.</p>
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+          <a href="/contact/" class="btn-gold"><i class="fas fa-envelope me-2"></i>Send Enquiry</a>
+          <a href="tel:+263771698755" class="btn-navy"><i class="fas fa-phone-alt me-2"></i>+263 771 698 755</a>
+          <a href="https://wa.me/263771698755" class="btn btn-success" style="font-weight:700; font-family:'Montserrat',sans-serif; text-transform:uppercase; letter-spacing:0.5px;"><i class="fab fa-whatsapp me-2"></i>WhatsApp</a>
         </div>
       </div>
-      <div class="col-lg-7 reveal">
-        <span class="lw-section-label">Repair Services</span>
-        <h2 class="lw-section-title">BOREHOLE<br>REPAIRS</h2>
-        <p class="lw-section-desc">Fast, professional borehole repair and maintenance services. We restore your water source to full capacity.</p>
-        <ul class="lw-repair-list">
-          <li><i class="bi bi-gear-fill text-warning me-2"></i>Borehole Repairs</li>
-          <li><i class="bi bi-gear-fill text-warning me-2"></i>Pump Fishouts</li>
-          <li><i class="bi bi-gear-fill text-warning me-2"></i>Borehole Flushing</li>
-          <li><i class="bi bi-gear-fill text-warning me-2"></i>Borehole Deepening</li>
-        </ul>
-        <a href="{% url 'contact:contact' %}?service=repair" class="btn lw-btn-gold mt-3">Book a Repair</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── TESTIMONIALS ── -->
-{% if testimonials %}
-<section class="lw-section bg-lw-navy">
-  <div class="container">
-    <div class="lw-section-header reveal">
-      <span class="lw-section-label">Client Feedback</span>
-      <h2 class="lw-section-title">WHAT OUR CLIENTS SAY</h2>
-    </div>
-    <div class="row g-4">
-      {% for t in testimonials %}
-      <div class="col-md-6 col-lg-4 reveal">
-        <div class="lw-testimonial">
-          <div class="lw-stars mb-2">
-            {% for i in "12345" %}{% if forloop.counter <= t.rating %}⭐{% endif %}{% endfor %}
-          </div>
-          <p class="lw-testimonial-text">"{{ t.message }}"</p>
-          <div class="lw-testimonial-author">— {{ t.name }}{% if t.location %}, <em>{{ t.location }}</em>{% endif %}</div>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-{% endif %}
-
-<!-- ── CTA BANNER ── -->
-<section class="lw-cta-banner">
-  <div class="container text-center">
-    <h2 class="lw-cta-title reveal">READY TO GET STARTED?</h2>
-    <p class="lw-cta-sub reveal">Contact us today for a free consultation and competitive quote.</p>
-    <div class="d-flex flex-wrap justify-content-center gap-3 mt-4 reveal">
-      <a href="{% url 'contact:contact' %}" class="btn lw-btn-gold btn-lg px-5">Get a Free Quote</a>
-      <a href="tel:{{ COMPANY.phone }}" class="btn lw-btn-outline btn-lg px-5">
-        <i class="bi bi-telephone me-2"></i>{{ COMPANY.phone }}
-      </a>
     </div>
   </div>
 </section>
