@@ -104,10 +104,10 @@ if USE_B2_STORAGE:
     AWS_SECRET_ACCESS_KEY = config('B2_APPLICATION_KEY')
     AWS_STORAGE_BUCKET_NAME = config('B2_BUCKET_NAME')
     AWS_S3_ENDPOINT_URL = config('B2_ENDPOINT_URL')
-    AWS_S3_REGION_NAME = config('B2_REGION', default='us-west-002')
-   AWS_DEFAULT_ACL = None
+    AWS_S3_REGION_NAME = config('B2_REGION', default='us-east-005')
+    AWS_DEFAULT_ACL = None
     AWS_S3_SIGNATURE_VERSION = 's3v4'
-  AWS_QUERYSTRING_AUTH = False
+    AWS_QUERYSTRING_AUTH = False
     MEDIA_URL = f"{config('B2_ENDPOINT_URL')}/{config('B2_BUCKET_NAME', default='lightworld-media')}/"
 
 # ── EMAIL (Gmail SMTP) ────────────────────────────────────────────────────────
