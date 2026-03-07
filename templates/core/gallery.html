@@ -1,111 +1,96 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Gallery – Light World Engineering{% endblock %}
+{% block title %}Gallery{% endblock %}
 
 {% block extra_head %}
 <style>
   .gallery-hero {
-    padding: 120px 0 60px;
-    background: linear-gradient(160deg, var(--lw-navy-mid), var(--lw-navy));
-    border-bottom: 1px solid rgba(240,192,48,0.1);
+    background: linear-gradient(135deg, rgba(10,22,40,0.92) 0%, rgba(18,34,68,0.85) 100%),
+                url('https://images.pexels.com/photos/414837/pexels-photo-414837.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover no-repeat;
+    padding: 6rem 0 4rem; color: var(--white);
   }
-  .gallery-filters {
-    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px;
-  }
-  .gf-btn {
-    background: transparent; border: 1px solid rgba(255,255,255,0.12);
-    color: var(--lw-grey); font-family: 'Barlow', sans-serif;
-    font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
-    padding: 8px 20px; border-radius: 4px; cursor: pointer;
-    transition: border-color 0.2s, color 0.2s, background 0.2s;
-    text-decoration: none; display: inline-block;
-  }
-  .gf-btn:hover, .gf-btn.active {
-    border-color: var(--lw-gold); color: var(--lw-gold);
-    background: rgba(240,192,48,0.07);
-  }
+  .gallery-hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; color: var(--white); }
+  .gallery-hero p { color: rgba(255,255,255,0.78); }
 
-  .gallery-section { padding: 60px 0 100px; background: var(--lw-navy); }
+  .filter-bar { background: var(--white); border-bottom: 2px solid #eee; padding: 16px 0; position: sticky; top: 68px; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .filter-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+  .flt-btn {
+    background: transparent; border: 1.5px solid #dde0e8; color: var(--text-muted);
+    font-family: 'Montserrat', sans-serif; font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.5px; text-transform: uppercase; padding: 7px 18px; border-radius: 4px;
+    cursor: pointer; text-decoration: none; transition: all 0.2s;
+  }
+  .flt-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .flt-btn.active { background: var(--navy); border-color: var(--navy); color: var(--white); }
+
+  .gallery-section { background: var(--light-bg); padding: 3rem 0 5rem; }
 
   .gallery-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
+    gap: 18px;
   }
-  .gallery-item {
-    position: relative; overflow: hidden; border-radius: 8px;
-    aspect-ratio: 4/3;
-    background: var(--lw-navy-mid);
-    border: 1px solid rgba(255,255,255,0.06);
-    cursor: pointer;
+  .gallery-card {
+    background: var(--white); border-radius: 10px; overflow: hidden;
+    box-shadow: 0 3px 16px rgba(0,0,0,0.08); cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
   }
-  .gallery-item img {
-    width: 100%; height: 100%; object-fit: cover;
-    transition: transform 0.5s ease;
-    display: block;
+  .gallery-card:hover { transform: translateY(-5px); box-shadow: 0 10px 36px rgba(0,0,0,0.15); }
+  .gallery-card-img {
+    position: relative; aspect-ratio: 4/3; overflow: hidden; background: #e9ecef;
   }
-  .gallery-item:hover img { transform: scale(1.06); }
-  .gallery-item-overlay {
+  .gallery-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; display: block; }
+  .gallery-card:hover .gallery-card-img img { transform: scale(1.07); }
+  .gallery-card-overlay {
     position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(6,14,26,0.9) 0%, transparent 55%);
-    opacity: 0; transition: opacity 0.3s;
-    display: flex; align-items: flex-end; padding: 20px;
-  }
-  .gallery-item:hover .gallery-item-overlay { opacity: 1; }
-  .gallery-item-title {
-    font-size: 14px; font-weight: 700; color: var(--lw-white); line-height: 1.3;
-  }
-  .gallery-item-cat {
-    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--lw-gold); margin-bottom: 4px;
-  }
-  .gallery-item-zoom {
-    position: absolute; top: 14px; right: 14px;
-    width: 36px; height: 36px; background: rgba(240,192,48,0.15);
-    border: 1px solid rgba(240,192,48,0.3); border-radius: 6px;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--lw-gold); font-size: 16px;
+    background: linear-gradient(to top, rgba(10,22,40,0.85) 0%, transparent 50%);
+    display: flex; align-items: flex-end; padding: 16px;
     opacity: 0; transition: opacity 0.3s;
   }
-  .gallery-item:hover .gallery-item-zoom { opacity: 1; }
+  .gallery-card:hover .gallery-card-overlay { opacity: 1; }
+  .zoom-icon {
+    position: absolute; top: 12px; right: 12px;
+    width: 34px; height: 34px; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px);
+    border-radius: 6px; display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 0.9rem; opacity: 0; transition: opacity 0.3s;
+  }
+  .gallery-card:hover .zoom-icon { opacity: 1; }
+  .gallery-card-info { padding: 14px 16px; }
+  .gallery-cat-badge {
+    display: inline-block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; padding: 3px 10px; border-radius: 3px; margin-bottom: 6px;
+    background: #fff3cd; color: var(--gold);
+  }
+  .gallery-card-title { font-size: 0.9rem; font-weight: 700; color: var(--navy); font-family: 'Montserrat', sans-serif; line-height: 1.3; }
+  .gallery-card-caption { font-size: 0.78rem; color: var(--text-muted); margin-top: 3px; }
 
-  /* Empty state */
   .gallery-empty {
-    grid-column: 1 / -1;
-    text-align: center; padding: 80px 20px;
+    grid-column: 1/-1; text-align: center; padding: 80px 20px;
+    background: var(--white); border-radius: 12px; border: 2px dashed #dde0e8;
   }
-  .gallery-empty-icon { font-size: 64px; margin-bottom: 20px; opacity: 0.4; }
-  .gallery-empty h4 {
-    font-family: 'Barlow Condensed', sans-serif; font-size: 22px;
-    font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
-    color: var(--lw-grey); margin-bottom: 10px;
-  }
-  .gallery-empty p { font-size: 14px; color: var(--lw-grey); opacity: 0.7; }
+  .gallery-empty i { font-size: 3.5rem; color: #ccc; margin-bottom: 16px; display: block; }
+  .gallery-empty h4 { font-size: 1.2rem; color: var(--navy); margin-bottom: 8px; }
+  .gallery-empty p { color: var(--text-muted); font-size: 0.9rem; }
 
-  /* Lightbox */
+  /* LIGHTBOX */
   .lightbox {
     display: none; position: fixed; inset: 0; z-index: 9999;
-    background: rgba(0,0,0,0.92); align-items: center; justify-content: center;
-    padding: 20px;
+    background: rgba(0,0,0,0.9); align-items: center; justify-content: center; padding: 24px;
   }
   .lightbox.open { display: flex; }
-  .lightbox-inner { position: relative; max-width: 900px; width: 100%; }
-  .lightbox-img { width: 100%; max-height: 80vh; object-fit: contain; border-radius: 8px; display: block; }
-  .lightbox-caption {
-    margin-top: 16px; text-align: center;
-    font-size: 14px; color: var(--lw-grey);
-  }
-  .lightbox-caption strong { color: var(--lw-white); display: block; font-size: 16px; margin-bottom: 4px; }
+  .lightbox-inner { position: relative; max-width: 860px; width: 100%; }
+  .lightbox-img { width: 100%; max-height: 78vh; object-fit: contain; border-radius: 8px; display: block; }
+  .lightbox-caption { margin-top: 14px; text-align: center; }
+  .lightbox-caption strong { display: block; font-size: 1rem; color: var(--white); margin-bottom: 3px; }
+  .lightbox-caption span { font-size: 0.82rem; color: rgba(255,255,255,0.55); }
   .lightbox-close {
-    position: absolute; top: -16px; right: -16px;
-    width: 44px; height: 44px; background: var(--lw-navy-mid);
-    border: 1px solid rgba(255,255,255,0.15); border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--lw-white); font-size: 20px; cursor: pointer;
-    transition: border-color 0.2s, color 0.2s;
+    position: absolute; top: -14px; right: -14px;
+    width: 40px; height: 40px; background: var(--navy); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: var(--white); font-size: 1rem; cursor: pointer; transition: background 0.2s;
   }
-  .lightbox-close:hover { border-color: var(--lw-gold); color: var(--lw-gold); }
+  .lightbox-close:hover { background: var(--gold); }
 </style>
 {% endblock %}
 
@@ -114,47 +99,67 @@
 <!-- HERO -->
 <section class="gallery-hero">
   <div class="container">
-    <span class="lw-section-label">Our Work</span>
-    <h1 class="lw-page-title">PROJECT<br>GALLERY</h1>
-    <p class="lw-page-sub">Real projects. Real results. Across Zimbabwe.</p>
-
-    <div class="gallery-filters">
-      <a href="{% url 'core:gallery' %}" class="gf-btn {% if not active_cat %}active{% endif %}">All</a>
-      <a href="?cat=borehole"  class="gf-btn {% if active_cat == 'borehole' %}active{% endif %}">Borehole</a>
-      <a href="?cat=solar"     class="gf-btn {% if active_cat == 'solar' %}active{% endif %}">Solar</a>
-      <a href="?cat=repair"    class="gf-btn {% if active_cat == 'repair' %}active{% endif %}">Repairs</a>
-      <a href="?cat=survey"    class="gf-btn {% if active_cat == 'survey' %}active{% endif %}">Site Survey</a>
-      <a href="?cat=other"     class="gf-btn {% if active_cat == 'other' %}active{% endif %}">Other</a>
-    </div>
+    <div class="section-tag mb-2"><i class="fas fa-images me-2"></i>Our Work</div>
+    <h1 class="mb-3">Project Gallery</h1>
+    <p class="mb-0">Real projects. Real results. Across Zimbabwe.</p>
   </div>
 </section>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="container">
+    <div class="filter-btns">
+      <a href="{% url 'core:gallery' %}" class="flt-btn {% if not active_cat %}active{% endif %}">
+        <i class="fas fa-th me-1"></i> All
+      </a>
+      <a href="?cat=borehole" class="flt-btn {% if active_cat == 'borehole' %}active{% endif %}">
+        <i class="fas fa-tint me-1"></i> Borehole
+      </a>
+      <a href="?cat=solar" class="flt-btn {% if active_cat == 'solar' %}active{% endif %}">
+        <i class="fas fa-solar-panel me-1"></i> Solar
+      </a>
+      <a href="?cat=repair" class="flt-btn {% if active_cat == 'repair' %}active{% endif %}">
+        <i class="fas fa-tools me-1"></i> Repairs
+      </a>
+      <a href="?cat=survey" class="flt-btn {% if active_cat == 'survey' %}active{% endif %}">
+        <i class="fas fa-map-marked-alt me-1"></i> Site Survey
+      </a>
+      <a href="?cat=other" class="flt-btn {% if active_cat == 'other' %}active{% endif %}">
+        <i class="fas fa-ellipsis-h me-1"></i> Other
+      </a>
+    </div>
+  </div>
+</div>
 
 <!-- GALLERY GRID -->
 <section class="gallery-section">
   <div class="container">
     {% if images %}
+    <p class="text-muted small mb-4">Showing {{ images|length }} photo{{ images|length|pluralize }}</p>
     <div class="gallery-grid">
       {% for img in images %}
-      <div class="gallery-item reveal" onclick="openLightbox('{{ img.image.url }}', '{{ img.title|escapejs }}', '{{ img.get_category_display|escapejs }}', '{{ img.caption|escapejs }}')">
-        <img src="{{ img.image.url }}" alt="{{ img.title }}" loading="lazy">
-        <div class="gallery-item-overlay">
-          <div>
-            <div class="gallery-item-cat">{{ img.get_category_display }}</div>
-            <div class="gallery-item-title">{{ img.title }}</div>
-          </div>
+      <div class="gallery-card" onclick="openLightbox('{{ img.image.url }}', '{{ img.title|escapejs }}', '{{ img.get_category_display|escapejs }}', '{{ img.caption|escapejs }}')">
+        <div class="gallery-card-img">
+          <img src="{{ img.image.url }}" alt="{{ img.title }}" loading="lazy">
+          <div class="gallery-card-overlay"></div>
+          <div class="zoom-icon"><i class="fas fa-search-plus"></i></div>
         </div>
-        <div class="gallery-item-zoom"><i class="bi bi-zoom-in"></i></div>
+        <div class="gallery-card-info">
+          <div class="gallery-cat-badge">{{ img.get_category_display }}</div>
+          <div class="gallery-card-title">{{ img.title }}</div>
+          {% if img.caption %}<div class="gallery-card-caption">{{ img.caption }}</div>{% endif %}
+        </div>
       </div>
       {% endfor %}
     </div>
     {% else %}
     <div class="gallery-grid">
       <div class="gallery-empty">
-        <div class="gallery-empty-icon">📷</div>
+        <i class="fas fa-camera"></i>
         <h4>No photos yet</h4>
         <p>
           {% if active_cat %}
-            No photos in this category yet. <a href="{% url 'core:gallery' %}" style="color:var(--lw-gold);">View all</a>
+            No photos in this category. <a href="{% url 'core:gallery' %}" style="color:var(--gold);">View all photos</a>
           {% else %}
             Photos will appear here once uploaded via the admin panel.
           {% endif %}
@@ -168,11 +173,11 @@
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
   <div class="lightbox-inner">
-    <div class="lightbox-close" onclick="closeLightbox()"><i class="bi bi-x-lg"></i></div>
-    <img class="lightbox-img" id="lightbox-img" src="" alt="">
+    <div class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></div>
+    <img class="lightbox-img" id="lb-img" src="" alt="">
     <div class="lightbox-caption">
-      <strong id="lightbox-title"></strong>
-      <span id="lightbox-cat"></span> — <span id="lightbox-caption"></span>
+      <strong id="lb-title"></strong>
+      <span id="lb-cat"></span>
     </div>
   </div>
 </div>
@@ -182,10 +187,9 @@
 {% block extra_js %}
 <script>
   function openLightbox(src, title, cat, caption) {
-    document.getElementById('lightbox-img').src = src;
-    document.getElementById('lightbox-title').textContent = title;
-    document.getElementById('lightbox-cat').textContent = cat;
-    document.getElementById('lightbox-caption').textContent = caption;
+    document.getElementById('lb-img').src = src;
+    document.getElementById('lb-title').textContent = title;
+    document.getElementById('lb-cat').textContent = cat + (caption ? ' — ' + caption : '');
     document.getElementById('lightbox').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -195,8 +199,6 @@
       document.body.style.overflow = '';
     }
   }
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeLightbox();
-  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 </script>
 {% endblock %}

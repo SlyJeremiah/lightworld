@@ -1,366 +1,301 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Contact Us – Light World Engineering{% endblock %}
+{% block title %}Contact Us{% endblock %}
 
 {% block extra_head %}
 <style>
-  .contact-hero {
-    position: relative;
-    padding: 120px 0 70px;
-    overflow: hidden;
-    background: linear-gradient(160deg, #060f20 0%, #0d1e38 60%, #060f20 100%);
+  .contact-page-hero {
+    background: linear-gradient(135deg, rgba(10,22,40,0.93) 0%, rgba(18,34,68,0.87) 100%),
+                url('https://images.pexels.com/photos/1108572/pexels-photo-1108572.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover no-repeat;
+    padding: 6rem 0 4rem;
+    color: var(--white);
   }
-  .contact-hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 60% 80% at 100% 50%, rgba(240,192,48,0.06) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 60% at 0% 50%, rgba(64,192,224,0.04) 0%, transparent 60%);
-  }
-  .contact-hero-grid {
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(240,192,48,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(240,192,48,0.04) 1px, transparent 1px);
-    background-size: 50px 50px;
-    mask-image: radial-gradient(ellipse 70% 90% at 50% 50%, black 0%, transparent 80%);
-  }
-  .contact-hero-label {
-    display: inline-flex; align-items: center; gap: 10px;
-    background: rgba(240,192,48,0.08); border: 1px solid rgba(240,192,48,0.2);
-    border-radius: 100px; padding: 6px 20px 6px 10px;
-    font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--lw-gold); margin-bottom: 22px;
-  }
-  .contact-hero-label span {
-    width: 22px; height: 22px; background: var(--lw-gold); border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; color: var(--lw-navy);
-  }
-  .contact-hero-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(54px, 8vw, 100px); line-height: 0.92;
-    color: var(--lw-white); margin-bottom: 20px;
-  }
-  .contact-hero-title em { font-style: normal; color: var(--lw-gold); }
-  .contact-hero-desc { font-size: 16px; color: var(--lw-grey); max-width: 460px; line-height: 1.75; }
-  .contact-hero-phones { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
-  .contact-hero-phone {
-    display: flex; align-items: center; gap: 12px;
-    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 50px; padding: 10px 22px 10px 10px;
-    text-decoration: none; color: var(--lw-white); font-size: 14px; font-weight: 600;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .contact-hero-phone:hover { border-color: var(--lw-gold); background: rgba(240,192,48,0.06); color: var(--lw-white); }
-  .contact-hero-phone i {
-    width: 34px; height: 34px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0;
-  }
-  .phone-icon-call { background: rgba(240,192,48,0.15); color: var(--lw-gold); }
-  .phone-icon-wa   { background: rgba(37,211,102,0.15); color: #25d366; }
+  .contact-page-hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; color: var(--white); }
+  .contact-page-hero p { color: rgba(255,255,255,0.78); font-size: 1.05rem; }
 
-  .contact-grid-section { background: var(--lw-navy); padding: 0 0 80px; }
-  .contact-card-row {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1px; background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; overflow: hidden;
-    transform: translateY(-40px); box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+  .quick-bar {
+    background: var(--navy);
+    padding: 0;
   }
-  .ccard {
-    background: var(--lw-navy-mid); padding: 28px 24px;
-    display: flex; align-items: center; gap: 16px;
-    text-decoration: none; color: var(--lw-white);
-    transition: background 0.2s; position: relative; overflow: hidden;
+  .quick-bar-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 3px solid var(--gold);
   }
-  .ccard::after {
-    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-    height: 2px; background: linear-gradient(90deg, var(--lw-gold), var(--lw-cyan));
-    transform: scaleX(0); transition: transform 0.3s;
-  }
-  .ccard:hover { background: var(--lw-navy-light); color: var(--lw-white); }
-  .ccard:hover::after { transform: scaleX(1); }
-  .ccard-icon {
-    width: 48px; height: 48px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;
-  }
-  .ccard-icon.gold  { background: rgba(240,192,48,0.12); color: var(--lw-gold); }
-  .ccard-icon.cyan  { background: rgba(64,192,224,0.12); color: var(--lw-cyan); }
-  .ccard-icon.green { background: rgba(37,211,102,0.12); color: #25d366; }
-  .ccard-icon.blue  { background: rgba(24,119,242,0.12); color: #1877f2; }
-  .ccard-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--lw-grey); margin-bottom: 3px; }
-  .ccard-value { font-size: 13px; font-weight: 700; color: var(--lw-white); line-height: 1.3; }
-
-  .form-section { padding: 0 0 100px; background: var(--lw-navy); }
-  .form-panel {
-    background: linear-gradient(145deg, var(--lw-navy-mid), #0b1a30);
-    border: 1px solid rgba(240,192,48,0.14); border-radius: 16px; padding: 52px 48px;
-    position: relative; overflow: hidden;
-  }
-  .form-panel::before {
-    content: ''; position: absolute; top: -100px; right: -100px;
-    width: 350px; height: 350px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(240,192,48,0.07) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .form-panel-title { font-family: 'Bebas Neue', sans-serif; font-size: 42px; color: var(--lw-white); margin-bottom: 6px; line-height: 1; }
-  .form-panel-sub { font-size: 14px; color: var(--lw-grey); margin-bottom: 36px; }
-  .form-panel-sub span { color: var(--lw-gold); font-weight: 700; }
-
-  .info-panel { padding-left: 20px; }
-  @media (max-width: 991px) { .info-panel { padding-left: 0; margin-top: 48px; } }
-  .info-section-title {
-    font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700;
-    letter-spacing: 3px; text-transform: uppercase; color: var(--lw-gold); margin-bottom: 20px;
-  }
-  .info-item {
-    display: flex; gap: 16px; padding: 20px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.06); align-items: flex-start;
-  }
-  .info-item:last-of-type { border-bottom: none; }
-  .info-item-icon {
-    width: 44px; height: 44px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; margin-top: 2px;
-  }
-  .info-item-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--lw-gold); margin-bottom: 4px; }
-  .info-item-value {
-    font-size: 15px; font-weight: 700; color: var(--lw-white);
-    text-decoration: none; transition: color 0.2s; display: block; line-height: 1.4;
-  }
-  a.info-item-value:hover { color: var(--lw-gold); }
-  .info-item-note { font-size: 12px; color: var(--lw-grey); margin-top: 3px; }
-
-  .response-badge {
+  @media (max-width: 767px) { .quick-bar-inner { grid-template-columns: repeat(2, 1fr); } }
+  .qb-item {
     display: flex; align-items: center; gap: 14px;
-    background: rgba(64,192,224,0.06); border: 1px solid rgba(64,192,224,0.18);
-    border-radius: 10px; padding: 18px 20px; margin-top: 32px;
+    padding: 20px 24px;
+    text-decoration: none; color: rgba(255,255,255,0.85);
+    border-right: 1px solid rgba(255,255,255,0.08);
+    transition: background 0.2s;
   }
-  .response-badge i { font-size: 26px; color: var(--lw-cyan); flex-shrink: 0; }
-  .response-badge strong { display: block; font-size: 14px; color: var(--lw-white); }
-  .response-badge span { font-size: 12px; color: var(--lw-grey); }
+  .qb-item:last-child { border-right: none; }
+  .qb-item:hover { background: rgba(255,255,255,0.06); color: var(--white); }
+  .qb-icon {
+    width: 42px; height: 42px; border-radius: 10px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+  }
+  .qb-icon.gold  { background: rgba(200,149,42,0.18); color: var(--gold-light); }
+  .qb-icon.cyan  { background: rgba(64,192,224,0.15); color: #40c0e0; }
+  .qb-icon.green { background: rgba(37,211,102,0.15); color: #25d366; }
+  .qb-icon.blue  { background: rgba(24,119,242,0.15); color: #5b9cf6; }
+  .qb-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold-light); margin-bottom: 2px; font-weight: 700; }
+  .qb-value { font-size: 0.85rem; font-weight: 700; font-family: 'Montserrat', sans-serif; line-height: 1.3; }
 
-  .wa-cta {
-    display: flex; align-items: center; justify-content: center; gap: 12px;
-    background: linear-gradient(135deg, #128c3e, #075e2a); border: none; border-radius: 8px;
-    padding: 16px 28px; color: #fff; font-family: 'Barlow', sans-serif;
-    font-weight: 700; font-size: 15px; letter-spacing: 0.5px; text-decoration: none;
-    transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 6px 24px rgba(18,140,62,0.3);
-    margin-top: 24px; width: 100%;
-  }
-  .wa-cta:hover { color: #fff; transform: translateY(-2px); box-shadow: 0 10px 32px rgba(18,140,62,0.45); }
-  .wa-cta i { font-size: 22px; }
+  .contact-main { background: var(--light-bg); padding: 4rem 0 5rem; }
 
-  .submit-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; padding-top: 8px; }
-  .btn-submit {
-    background: linear-gradient(135deg, var(--lw-gold), var(--lw-gold-dark));
-    color: var(--lw-navy); border: none; font-family: 'Barlow', sans-serif;
-    font-weight: 800; font-size: 14px; letter-spacing: 2px; text-transform: uppercase;
-    padding: 16px 44px; border-radius: 6px;
-    transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 6px 24px rgba(240,192,48,0.3);
-    cursor: pointer; display: flex; align-items: center; gap: 10px;
+  .form-card {
+    background: var(--white); border-radius: 16px;
+    box-shadow: 0 6px 36px rgba(0,0,0,0.1); overflow: hidden;
   }
-  .btn-submit:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(240,192,48,0.45); }
-  .btn-submit i { font-size: 16px; transition: transform 0.2s; }
-  .btn-submit:hover i { transform: translateX(4px); }
-  .submit-alt { font-size: 13px; color: var(--lw-grey); }
-  .submit-alt a { color: var(--lw-gold); text-decoration: none; font-weight: 700; }
+  .form-card-header {
+    background: var(--navy); padding: 28px 36px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .form-card-header-icon {
+    width: 48px; height: 48px; background: rgba(200,149,42,0.2);
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    color: var(--gold-light); font-size: 1.3rem; flex-shrink: 0;
+  }
+  .form-card-header h4 { color: var(--white); margin: 0; font-size: 1.2rem; }
+  .form-card-header p { color: rgba(255,255,255,0.6); margin: 0; font-size: 0.82rem; }
+  .form-card-body { padding: 32px 36px; }
+  @media (max-width: 575px) { .form-card-body { padding: 24px 20px; } .form-card-header { padding: 22px 20px; } }
 
-  @media (max-width: 575px) {
-    .form-panel { padding: 32px 24px; }
-    .contact-card-row { grid-template-columns: repeat(2, 1fr); }
+  .error-box {
+    background: #fff5f5; border: 1px solid #ffcccc; border-radius: 8px;
+    padding: 14px 18px; margin-bottom: 20px; font-size: 0.88rem; color: #c0392b;
   }
+  .field-req { color: var(--gold); }
+
+  .btn-submit-main {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--navy); border: none; font-family: 'Montserrat', sans-serif;
+    font-weight: 800; font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase;
+    padding: 14px 40px; border-radius: 6px; cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 18px rgba(200,149,42,0.35);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-submit-main:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(200,149,42,0.5); }
+
+  .side-card {
+    background: var(--white); border-radius: 14px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08); overflow: hidden; height: 100%;
+  }
+  .side-card-header {
+    background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+    padding: 22px 26px;
+  }
+  .side-card-header h5 { color: var(--white); margin: 0; font-size: 1rem; letter-spacing: 0.5px; }
+  .side-card-header p { color: rgba(255,255,255,0.55); margin: 0; font-size: 0.78rem; margin-top: 3px; }
+
+  .contact-detail-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 16px 24px; border-bottom: 1px solid #f0f0f0;
+    text-decoration: none; color: var(--text-dark);
+    transition: background 0.15s;
+  }
+  .contact-detail-item:last-of-type { border-bottom: none; }
+  .contact-detail-item:hover { background: #f9f9f9; color: var(--text-dark); }
+  .cdi-icon {
+    width: 38px; height: 38px; border-radius: 8px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 1rem; margin-top: 2px;
+  }
+  .cdi-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold); font-weight: 700; margin-bottom: 3px; }
+  .cdi-value { font-size: 0.88rem; font-weight: 700; font-family: 'Montserrat', sans-serif; color: var(--navy); line-height: 1.3; }
+  .cdi-note { font-size: 0.75rem; color: var(--text-muted); margin-top: 1px; }
+
+  .response-strip {
+    background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+    border-top: 3px solid #4caf50;
+    padding: 16px 24px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .response-strip i { font-size: 1.5rem; color: #4caf50; flex-shrink: 0; }
+  .response-strip strong { font-size: 0.88rem; color: #2e7d32; display: block; }
+  .response-strip span { font-size: 0.78rem; color: #558b2f; }
+
+  .wa-button {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    background: #25d366; color: var(--white); text-decoration: none;
+    font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.9rem;
+    padding: 14px 24px; margin: 0;
+    transition: background 0.2s;
+  }
+  .wa-button:hover { background: #1ebe5d; color: var(--white); }
+  .wa-button i { font-size: 1.2rem; }
 </style>
 {% endblock %}
 
 {% block content %}
 
 <!-- HERO -->
-<section class="contact-hero">
-  <div class="contact-hero-grid"></div>
-  <div class="container position-relative">
-    <div class="row align-items-center">
-      <div class="col-lg-7">
-        <div class="contact-hero-label">
-          <span><i class="bi bi-lightning-fill"></i></span>
-          Fast Response · Zimbabwe Wide
-        </div>
-        <h1 class="contact-hero-title">GET IN<br><em>TOUCH</em></h1>
-        <p class="contact-hero-desc">
-          Ready to drill a borehole, install solar, or need a repair? Tell us about your project and we'll come back with a detailed quote — fast.
-        </p>
-        <div class="contact-hero-phones">
-          <a href="tel:+263771698755" class="contact-hero-phone">
-            <i class="bi bi-telephone-fill phone-icon-call"></i>
-            +263 771 698 755
-          </a>
-          <a href="https://wa.me/263771698755" target="_blank" class="contact-hero-phone">
-            <i class="bi bi-whatsapp phone-icon-wa"></i>
-            WhatsApp Us
-          </a>
-        </div>
-      </div>
-      <div class="col-lg-5 d-none d-lg-flex justify-content-end">
-        <div style="position:relative;width:320px;height:260px;">
-          <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(240,192,48,0.08),rgba(64,192,224,0.08));border:1px solid rgba(240,192,48,0.15);border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;">
-            <div style="font-size:56px;">📞</div>
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--lw-gold);letter-spacing:2px;">CALL ANYTIME</div>
-            <div style="font-size:13px;color:var(--lw-grey);">Mon – Sat · 7am – 6pm</div>
-            <div style="font-size:13px;color:var(--lw-grey);">Emergency: <span style="color:var(--lw-gold);font-weight:700;">24/7</span></div>
-          </div>
-          <div style="position:absolute;top:-14px;right:-14px;width:60px;height:60px;background:rgba(240,192,48,0.12);border:1px solid rgba(240,192,48,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;">⚡</div>
-          <div style="position:absolute;bottom:-14px;left:-14px;width:50px;height:50px;background:rgba(64,192,224,0.1);border:1px solid rgba(64,192,224,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;">🌍</div>
-        </div>
-      </div>
-    </div>
+<section class="contact-page-hero">
+  <div class="container">
+    <div class="section-tag mb-2"><i class="fas fa-headset me-2"></i>Get In Touch</div>
+    <h1 class="mb-3">Contact Us</h1>
+    <p class="mb-0">Ready to start your project? Reach out and we'll respond with a quote fast.</p>
   </div>
 </section>
 
-<!-- QUICK CARDS -->
-<section class="contact-grid-section">
-  <div class="container">
-    <div class="contact-card-row">
-      <a href="tel:+263771698755" class="ccard">
-        <div class="ccard-icon gold"><i class="bi bi-telephone-fill"></i></div>
-        <div><div class="ccard-label">Call Us</div><div class="ccard-value">+263 771 698 755</div></div>
+<!-- QUICK CONTACT BAR -->
+<div class="quick-bar">
+  <div class="container p-0">
+    <div class="quick-bar-inner">
+      <a href="tel:+263771698755" class="qb-item">
+        <div class="qb-icon gold"><i class="fas fa-phone"></i></div>
+        <div><div class="qb-label">Call Us</div><div class="qb-value">+263 771 698 755</div></div>
       </a>
-      <a href="mailto:{{ COMPANY.email }}" class="ccard">
-        <div class="ccard-icon cyan"><i class="bi bi-envelope-fill"></i></div>
-        <div><div class="ccard-label">Email</div><div class="ccard-value">{{ COMPANY.email }}</div></div>
+      <a href="mailto:{{ COMPANY.email }}" class="qb-item">
+        <div class="qb-icon cyan"><i class="fas fa-envelope"></i></div>
+        <div><div class="qb-label">Email</div><div class="qb-value">{{ COMPANY.email }}</div></div>
       </a>
-      <a href="https://wa.me/263771698755" target="_blank" class="ccard">
-        <div class="ccard-icon green"><i class="bi bi-whatsapp"></i></div>
-        <div><div class="ccard-label">WhatsApp</div><div class="ccard-value">Message Us Now</div></div>
+      <a href="https://wa.me/263771698755" target="_blank" class="qb-item">
+        <div class="qb-icon green"><i class="fab fa-whatsapp"></i></div>
+        <div><div class="qb-label">WhatsApp</div><div class="qb-value">Message Us Now</div></div>
       </a>
-      <a href="{{ COMPANY.facebook_url }}" target="_blank" class="ccard">
-        <div class="ccard-icon blue"><i class="bi bi-facebook"></i></div>
-        <div><div class="ccard-label">Facebook</div><div class="ccard-value">light world engineering</div></div>
+      <a href="{{ COMPANY.facebook_url }}" target="_blank" class="qb-item">
+        <div class="qb-icon blue"><i class="fab fa-facebook-f"></i></div>
+        <div><div class="qb-label">Facebook</div><div class="qb-value">light world engineering</div></div>
       </a>
     </div>
   </div>
-</section>
+</div>
 
-<!-- FORM + SIDE INFO -->
-<section class="form-section">
+<!-- MAIN CONTENT -->
+<section class="contact-main">
   <div class="container">
-    <div class="row">
+    <div class="row g-4 align-items-start">
+
+      <!-- FORM -->
       <div class="col-lg-8">
-        <div class="form-panel">
-          {% if form.errors %}
-          <div class="alert mb-4" style="background:rgba(204,32,32,0.12);border:1px solid rgba(204,32,32,0.35);color:#ff8888;border-radius:8px;padding:16px 20px;">
-            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-            <strong>Please fix the following:</strong>
-            <ul class="mb-0 mt-2" style="font-size:13px;">
-              {% for field in form %}{% for error in field.errors %}<li><strong>{{ field.label }}:</strong> {{ error }}</li>{% endfor %}{% endfor %}
-              {% for error in form.non_field_errors %}<li>{{ error }}</li>{% endfor %}
-            </ul>
+        <div class="form-card">
+          <div class="form-card-header">
+            <div class="form-card-header-icon"><i class="fas fa-paper-plane"></i></div>
+            <div>
+              <h4>Send an Enquiry</h4>
+              <p>We'll get back to you within 2 hours with a detailed quote.</p>
+            </div>
           </div>
-          {% endif %}
+          <div class="form-card-body">
 
-          <div class="form-panel-title">Send an Enquiry</div>
-          <p class="form-panel-sub">Fields marked <span>*</span> are required. We reply within <span>2 hours</span>.</p>
+            {% if form.errors %}
+            <div class="error-box">
+              <i class="fas fa-exclamation-triangle me-2"></i><strong>Please fix the following:</strong>
+              <ul class="mb-0 mt-2">
+                {% for field in form %}{% for error in field.errors %}<li><strong>{{ field.label }}:</strong> {{ error }}</li>{% endfor %}{% endfor %}
+                {% for error in form.non_field_errors %}<li>{{ error }}</li>{% endfor %}
+              </ul>
+            </div>
+            {% endif %}
 
-          <form method="post" novalidate>
-            {% csrf_token %}
-            <div class="row g-3">
-              <div class="col-sm-6">
-                <label class="lw-form-label">First Name *</label>
-                {{ form.first_name }}
-                {% if form.first_name.errors %}<div class="lw-form-error">{{ form.first_name.errors.0 }}</div>{% endif %}
-              </div>
-              <div class="col-sm-6">
-                <label class="lw-form-label">Last Name *</label>
-                {{ form.last_name }}
-                {% if form.last_name.errors %}<div class="lw-form-error">{{ form.last_name.errors.0 }}</div>{% endif %}
-              </div>
-              <div class="col-sm-6">
-                <label class="lw-form-label">Phone Number *</label>
-                {{ form.phone }}
-                {% if form.phone.errors %}<div class="lw-form-error">{{ form.phone.errors.0 }}</div>{% endif %}
-              </div>
-              <div class="col-sm-6">
-                <label class="lw-form-label">Email <small style="color:var(--lw-grey);font-size:10px;letter-spacing:1px;">(optional)</small></label>
-                {{ form.email }}
-                {% if form.email.errors %}<div class="lw-form-error">{{ form.email.errors.0 }}</div>{% endif %}
-              </div>
-              <div class="col-12">
-                <label class="lw-form-label">Service Required *</label>
-                {{ form.service }}
-                {% if form.service.errors %}<div class="lw-form-error">{{ form.service.errors.0 }}</div>{% endif %}
-              </div>
-              <div class="col-12">
-                <label class="lw-form-label">Your Location / Area <small style="color:var(--lw-grey);font-size:10px;letter-spacing:1px;">(optional)</small></label>
-                {{ form.location }}
-              </div>
-              <div class="col-12">
-                <label class="lw-form-label">Message / Additional Details <small style="color:var(--lw-grey);font-size:10px;letter-spacing:1px;">(optional)</small></label>
-                {{ form.message }}
-              </div>
-              <div class="col-12">
-                <div class="submit-row">
-                  <button type="submit" class="btn-submit">
-                    Send Enquiry <i class="bi bi-arrow-right"></i>
+            <form method="post" novalidate>
+              {% csrf_token %}
+              <div class="row g-3">
+                <div class="col-sm-6">
+                  <label class="form-label">First Name <span class="field-req">*</span></label>
+                  {{ form.first_name }}
+                  {% if form.first_name.errors %}<div class="text-danger small mt-1">{{ form.first_name.errors.0 }}</div>{% endif %}
+                </div>
+                <div class="col-sm-6">
+                  <label class="form-label">Last Name <span class="field-req">*</span></label>
+                  {{ form.last_name }}
+                  {% if form.last_name.errors %}<div class="text-danger small mt-1">{{ form.last_name.errors.0 }}</div>{% endif %}
+                </div>
+                <div class="col-sm-6">
+                  <label class="form-label">Phone Number <span class="field-req">*</span></label>
+                  {{ form.phone }}
+                  {% if form.phone.errors %}<div class="text-danger small mt-1">{{ form.phone.errors.0 }}</div>{% endif %}
+                </div>
+                <div class="col-sm-6">
+                  <label class="form-label">Email <small class="text-muted fw-normal">(optional)</small></label>
+                  {{ form.email }}
+                  {% if form.email.errors %}<div class="text-danger small mt-1">{{ form.email.errors.0 }}</div>{% endif %}
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Service Required <span class="field-req">*</span></label>
+                  {{ form.service }}
+                  {% if form.service.errors %}<div class="text-danger small mt-1">{{ form.service.errors.0 }}</div>{% endif %}
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Your Location / Area <small class="text-muted fw-normal">(optional)</small></label>
+                  {{ form.location }}
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Message / Additional Details <small class="text-muted fw-normal">(optional)</small></label>
+                  {{ form.message }}
+                </div>
+                <div class="col-12 d-flex align-items-center gap-3 flex-wrap pt-2">
+                  <button type="submit" class="btn-submit-main">
+                    Send Enquiry <i class="fas fa-arrow-right"></i>
                   </button>
-                  <span class="submit-alt">or call <a href="tel:+263771698755">+263 771 698 755</a></span>
+                  <span class="text-muted small">or call <a href="tel:+263771698755" class="text-gold fw-bold" style="color:var(--gold);">+263 771 698 755</a></span>
                 </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
 
+      <!-- SIDE INFO -->
       <div class="col-lg-4">
-        <div class="info-panel">
-          <div class="info-section-title">Contact Details</div>
-
-          <div class="info-item">
-            <div class="info-item-icon" style="background:rgba(240,192,48,0.1);color:var(--lw-gold);"><i class="bi bi-telephone-fill"></i></div>
-            <div>
-              <div class="info-item-label">Phone</div>
-              <a href="tel:+263771698755" class="info-item-value">+263 771 698 755</a>
-              <div class="info-item-note">Mon – Sat, 7am – 6pm</div>
-            </div>
-          </div>
-          <div class="info-item">
-            <div class="info-item-icon" style="background:rgba(64,192,224,0.1);color:var(--lw-cyan);"><i class="bi bi-envelope-fill"></i></div>
-            <div>
-              <div class="info-item-label">Primary Email</div>
-              <a href="mailto:{{ COMPANY.email }}" class="info-item-value" style="font-size:13px;">{{ COMPANY.email }}</a>
-            </div>
-          </div>
-          <div class="info-item">
-            <div class="info-item-icon" style="background:rgba(64,192,224,0.07);color:var(--lw-grey);"><i class="bi bi-envelope"></i></div>
-            <div>
-              <div class="info-item-label">Alt Email</div>
-              <a href="mailto:{{ COMPANY.email_alt }}" class="info-item-value" style="font-size:13px;">{{ COMPANY.email_alt }}</a>
-            </div>
-          </div>
-          <div class="info-item">
-            <div class="info-item-icon" style="background:rgba(24,119,242,0.1);color:#1877f2;"><i class="bi bi-facebook"></i></div>
-            <div>
-              <div class="info-item-label">Facebook</div>
-              <a href="{{ COMPANY.facebook_url }}" target="_blank" class="info-item-value" style="font-size:13px;">{{ COMPANY.facebook }}</a>
-            </div>
-          </div>
-          <div class="info-item">
-            <div class="info-item-icon" style="background:rgba(37,211,102,0.1);color:#25d366;"><i class="bi bi-geo-alt-fill"></i></div>
-            <div>
-              <div class="info-item-label">Coverage</div>
-              <div class="info-item-value" style="font-size:13px;cursor:default;">All Provinces, Zimbabwe</div>
-              <div class="info-item-note">Everywhere to Anyone</div>
-            </div>
+        <div class="side-card">
+          <div class="side-card-header">
+            <h5><i class="fas fa-address-card me-2" style="color:var(--gold-light);"></i>Our Contact Details</h5>
+            <p>Reach us through any channel below</p>
           </div>
 
-          <div class="response-badge">
-            <i class="bi bi-clock-history"></i>
+          <a href="tel:+263771698755" class="contact-detail-item">
+            <div class="cdi-icon" style="background:#fff3cd;"><i class="fas fa-phone" style="color:var(--gold);"></i></div>
+            <div>
+              <div class="cdi-label">Phone</div>
+              <div class="cdi-value">+263 771 698 755</div>
+              <div class="cdi-note">Mon – Sat, 7am – 6pm</div>
+            </div>
+          </a>
+          <a href="mailto:{{ COMPANY.email }}" class="contact-detail-item">
+            <div class="cdi-icon" style="background:#e3f2fd;"><i class="fas fa-envelope" style="color:#1976d2;"></i></div>
+            <div>
+              <div class="cdi-label">Primary Email</div>
+              <div class="cdi-value" style="font-size:0.78rem;">{{ COMPANY.email }}</div>
+            </div>
+          </a>
+          <a href="mailto:{{ COMPANY.email_alt }}" class="contact-detail-item">
+            <div class="cdi-icon" style="background:#f3e5f5;"><i class="fas fa-envelope-open" style="color:#7b1fa2;"></i></div>
+            <div>
+              <div class="cdi-label">Alt Email</div>
+              <div class="cdi-value" style="font-size:0.78rem;">{{ COMPANY.email_alt }}</div>
+            </div>
+          </a>
+          <a href="{{ COMPANY.facebook_url }}" target="_blank" class="contact-detail-item">
+            <div class="cdi-icon" style="background:#e8eaf6;"><i class="fab fa-facebook-f" style="color:#1877f2;"></i></div>
+            <div>
+              <div class="cdi-label">Facebook</div>
+              <div class="cdi-value">{{ COMPANY.facebook }}</div>
+            </div>
+          </a>
+          <div class="contact-detail-item">
+            <div class="cdi-icon" style="background:#e8f5e9;"><i class="fas fa-map-marker-alt" style="color:#2e7d32;"></i></div>
+            <div>
+              <div class="cdi-label">Coverage</div>
+              <div class="cdi-value">All Provinces, Zimbabwe</div>
+              <div class="cdi-note">Everywhere to Anyone</div>
+            </div>
+          </div>
+
+          <div class="response-strip">
+            <i class="fas fa-clock"></i>
             <div>
               <strong>Fast Response Guarantee</strong>
               <span>We reply to all enquiries within 2 hours during business hours.</span>
             </div>
           </div>
 
-          <a href="https://wa.me/263771698755" target="_blank" class="wa-cta">
-            <i class="bi bi-whatsapp"></i> Chat on WhatsApp
+          <a href="https://wa.me/263771698755" target="_blank" class="wa-button">
+            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
           </a>
         </div>
       </div>
