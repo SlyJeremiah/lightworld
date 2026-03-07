@@ -1,122 +1,202 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
-{% block title %}Gallery — Our Work{% endblock %}
 
-{% block extra_css %}
-.gallery-item img { transition: transform 0.3s; }
-.gallery-item:hover img { transform: scale(1.03); }
-.gallery-item { overflow: hidden; border-radius: 10px; }
+{% block title %}Gallery – Light World Engineering{% endblock %}
+
+{% block extra_head %}
+<style>
+  .gallery-hero {
+    padding: 120px 0 60px;
+    background: linear-gradient(160deg, var(--lw-navy-mid), var(--lw-navy));
+    border-bottom: 1px solid rgba(240,192,48,0.1);
+  }
+  .gallery-filters {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px;
+  }
+  .gf-btn {
+    background: transparent; border: 1px solid rgba(255,255,255,0.12);
+    color: var(--lw-grey); font-family: 'Barlow', sans-serif;
+    font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 8px 20px; border-radius: 4px; cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+    text-decoration: none; display: inline-block;
+  }
+  .gf-btn:hover, .gf-btn.active {
+    border-color: var(--lw-gold); color: var(--lw-gold);
+    background: rgba(240,192,48,0.07);
+  }
+
+  .gallery-section { padding: 60px 0 100px; background: var(--lw-navy); }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .gallery-item {
+    position: relative; overflow: hidden; border-radius: 8px;
+    aspect-ratio: 4/3;
+    background: var(--lw-navy-mid);
+    border: 1px solid rgba(255,255,255,0.06);
+    cursor: pointer;
+  }
+  .gallery-item img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.5s ease;
+    display: block;
+  }
+  .gallery-item:hover img { transform: scale(1.06); }
+  .gallery-item-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(6,14,26,0.9) 0%, transparent 55%);
+    opacity: 0; transition: opacity 0.3s;
+    display: flex; align-items: flex-end; padding: 20px;
+  }
+  .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+  .gallery-item-title {
+    font-size: 14px; font-weight: 700; color: var(--lw-white); line-height: 1.3;
+  }
+  .gallery-item-cat {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--lw-gold); margin-bottom: 4px;
+  }
+  .gallery-item-zoom {
+    position: absolute; top: 14px; right: 14px;
+    width: 36px; height: 36px; background: rgba(240,192,48,0.15);
+    border: 1px solid rgba(240,192,48,0.3); border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--lw-gold); font-size: 16px;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .gallery-item:hover .gallery-item-zoom { opacity: 1; }
+
+  /* Empty state */
+  .gallery-empty {
+    grid-column: 1 / -1;
+    text-align: center; padding: 80px 20px;
+  }
+  .gallery-empty-icon { font-size: 64px; margin-bottom: 20px; opacity: 0.4; }
+  .gallery-empty h4 {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 22px;
+    font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--lw-grey); margin-bottom: 10px;
+  }
+  .gallery-empty p { font-size: 14px; color: var(--lw-grey); opacity: 0.7; }
+
+  /* Lightbox */
+  .lightbox {
+    display: none; position: fixed; inset: 0; z-index: 9999;
+    background: rgba(0,0,0,0.92); align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox-inner { position: relative; max-width: 900px; width: 100%; }
+  .lightbox-img { width: 100%; max-height: 80vh; object-fit: contain; border-radius: 8px; display: block; }
+  .lightbox-caption {
+    margin-top: 16px; text-align: center;
+    font-size: 14px; color: var(--lw-grey);
+  }
+  .lightbox-caption strong { color: var(--lw-white); display: block; font-size: 16px; margin-bottom: 4px; }
+  .lightbox-close {
+    position: absolute; top: -16px; right: -16px;
+    width: 44px; height: 44px; background: var(--lw-navy-mid);
+    border: 1px solid rgba(255,255,255,0.15); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--lw-white); font-size: 20px; cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .lightbox-close:hover { border-color: var(--lw-gold); color: var(--lw-gold); }
+</style>
 {% endblock %}
 
 {% block content %}
 
-<div class="page-hero" style="background-image: linear-gradient(135deg, rgba(10,22,40,0.92) 0%, rgba(18,34,68,0.85) 100%), url('https://images.pexels.com/photos/2751104/pexels-photo-2751104.jpeg?auto=compress&cs=tinysrgb&w=1600'); background-size:cover; background-position:center;">
+<!-- HERO -->
+<section class="gallery-hero">
   <div class="container">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item active">Gallery</li>
-      </ol>
-    </nav>
-    <h1><i class="fas fa-images me-3" style="color:var(--gold-light);"></i>Our Work</h1>
-    <p class="mt-2">Photos and videos from borehole drilling, solar installations and site surveys across Zimbabwe</p>
-  </div>
-</div>
+    <span class="lw-section-label">Our Work</span>
+    <h1 class="lw-page-title">PROJECT<br>GALLERY</h1>
+    <p class="lw-page-sub">Real projects. Real results. Across Zimbabwe.</p>
 
-<section class="py-5 bg-light-grey">
-  <div class="container">
-
-    {% if items %}
-    <div class="row g-3">
-      {% for item in items %}
-      <div class="col-md-4 col-sm-6">
-        <div class="gallery-item shadow-sm" style="background:var(--white);">
-          {% if item.media_type == 'video' and item.video_url %}
-            <div class="ratio ratio-16x9">
-              <iframe src="{{ item.video_url }}" title="{{ item.title }}" allowfullscreen style="border:none;"></iframe>
-            </div>
-          {% elif item.image %}
-            <img src="{{ item.image.url }}"
-                 alt="{{ item.title }}"
-                 class="img-fluid w-100"
-                 style="height:240px; object-fit:cover; cursor:pointer;"
-                 data-bs-toggle="modal"
-                 data-bs-target="#modal{{ item.pk }}">
-          {% endif %}
-          {% if item.title or item.caption %}
-          <div class="p-3">
-            {% if item.title %}<p class="fw-semibold mb-0 small text-navy">{{ item.title }}</p>{% endif %}
-            {% if item.caption %}<p class="text-muted small mb-0">{{ item.caption }}</p>{% endif %}
-          </div>
-          {% endif %}
-        </div>
-      </div>
-
-      {% if item.media_type == 'image' and item.image %}
-      <div class="modal fade" id="modal{{ item.pk }}" tabindex="-1">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-          <div class="modal-content bg-dark border-0">
-            <div class="modal-header border-0 pb-0">
-              {% if item.title %}<h6 class="modal-title text-white">{{ item.title }}</h6>{% endif %}
-              <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body text-center p-2">
-              <img src="{{ item.image.url }}" class="img-fluid rounded" alt="{{ item.title }}" style="max-height:80vh;">
-              {% if item.caption %}<p class="text-white mt-2 small">{{ item.caption }}</p>{% endif %}
-            </div>
-          </div>
-        </div>
-      </div>
-      {% endif %}
-      {% endfor %}
+    <div class="gallery-filters">
+      <a href="{% url 'core:gallery' %}" class="gf-btn {% if not active_cat %}active{% endif %}">All</a>
+      <a href="?cat=borehole"  class="gf-btn {% if active_cat == 'borehole' %}active{% endif %}">Borehole</a>
+      <a href="?cat=solar"     class="gf-btn {% if active_cat == 'solar' %}active{% endif %}">Solar</a>
+      <a href="?cat=repair"    class="gf-btn {% if active_cat == 'repair' %}active{% endif %}">Repairs</a>
+      <a href="?cat=survey"    class="gf-btn {% if active_cat == 'survey' %}active{% endif %}">Site Survey</a>
+      <a href="?cat=other"     class="gf-btn {% if active_cat == 'other' %}active{% endif %}">Other</a>
     </div>
-
-    {% else %}
-    <!-- FALLBACK: show static images when no DB images uploaded yet -->
-    <div class="text-center mb-4">
-      <p class="text-muted"><i class="fas fa-info-circle me-1"></i>Add images via the <a href="/admin/core/galleryimage/add/" class="text-gold">admin panel</a> to display them here.</p>
-    </div>
-    <div class="row g-3">
-      <div class="col-md-4 col-sm-6">
-        <div class="gallery-item shadow-sm">
-          <img src="{% static 'img/641583358_895161573491329_3204533064711458111_n.jpeg' %}" class="img-fluid w-100" style="height:240px; object-fit:cover;" alt="Borehole Drilling">
-          <div class="p-3"><p class="fw-semibold mb-0 small text-navy">Borehole Drilling in Progress</p></div>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6">
-        <div class="gallery-item shadow-sm">
-          <img src="{% static 'img/592903966_829161743424646_1608025319837431502_n.jpeg' %}" class="img-fluid w-100" style="height:240px; object-fit:cover;" alt="Borehole Repairs">
-          <div class="p-3"><p class="fw-semibold mb-0 small text-navy">Borehole Repair Services</p></div>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6">
-        <div class="gallery-item shadow-sm">
-          <img src="{% static 'img/642148213_898708903136596_8789494646828816813_n.jpeg' %}" class="img-fluid w-100" style="height:240px; object-fit:cover;" alt="Solar Installation">
-          <div class="p-3"><p class="fw-semibold mb-0 small text-navy">Solar System Installation</p></div>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6">
-        <div class="gallery-item shadow-sm">
-          <img src="{% static 'img/639765987_892602987080521_5238803597517677225_n.jpeg' %}" class="img-fluid w-100" style="height:240px; object-fit:cover;" alt="Site Survey">
-          <div class="p-3"><p class="fw-semibold mb-0 small text-navy">Site Survey & Assessment</p></div>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6">
-        <div class="gallery-item shadow-sm">
-          <img src="{% static 'img/629757603_885052081168945_9011226337966404936_n.jpeg' %}" class="img-fluid w-100" style="height:240px; object-fit:cover;" alt="Completed Borehole">
-          <div class="p-3"><p class="fw-semibold mb-0 small text-navy">Completed Borehole Installation</p></div>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6">
-        <div class="gallery-item shadow-sm">
-          <img src="{% static 'img/light_world.jpeg' %}" class="img-fluid w-100" style="height:240px; object-fit:cover;" alt="Light World Engineering">
-          <div class="p-3"><p class="fw-semibold mb-0 small text-navy">Light World Engineering Team</p></div>
-        </div>
-      </div>
-    </div>
-    {% endif %}
-
   </div>
 </section>
 
+<!-- GALLERY GRID -->
+<section class="gallery-section">
+  <div class="container">
+    {% if images %}
+    <div class="gallery-grid">
+      {% for img in images %}
+      <div class="gallery-item reveal" onclick="openLightbox('{{ img.image.url }}', '{{ img.title|escapejs }}', '{{ img.get_category_display|escapejs }}', '{{ img.caption|escapejs }}')">
+        <img src="{{ img.image.url }}" alt="{{ img.title }}" loading="lazy">
+        <div class="gallery-item-overlay">
+          <div>
+            <div class="gallery-item-cat">{{ img.get_category_display }}</div>
+            <div class="gallery-item-title">{{ img.title }}</div>
+          </div>
+        </div>
+        <div class="gallery-item-zoom"><i class="bi bi-zoom-in"></i></div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="gallery-grid">
+      <div class="gallery-empty">
+        <div class="gallery-empty-icon">📷</div>
+        <h4>No photos yet</h4>
+        <p>
+          {% if active_cat %}
+            No photos in this category yet. <a href="{% url 'core:gallery' %}" style="color:var(--lw-gold);">View all</a>
+          {% else %}
+            Photos will appear here once uploaded via the admin panel.
+          {% endif %}
+        </p>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <div class="lightbox-inner">
+    <div class="lightbox-close" onclick="closeLightbox()"><i class="bi bi-x-lg"></i></div>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="">
+    <div class="lightbox-caption">
+      <strong id="lightbox-title"></strong>
+      <span id="lightbox-cat"></span> — <span id="lightbox-caption"></span>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  function openLightbox(src, title, cat, caption) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox-title').textContent = title;
+    document.getElementById('lightbox-cat').textContent = cat;
+    document.getElementById('lightbox-caption').textContent = caption;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox(e) {
+    if (!e || e.target === document.getElementById('lightbox') || e.target.closest('.lightbox-close')) {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
+</script>
 {% endblock %}
