@@ -1,112 +1,413 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
+{% block title %}Contact Us — Get a Free Quote{% endblock %}
 
-{% block title %}Contact Us – Light World Engineering{% endblock %}
+{% block extra_css %}
+.contact-hero {
+  min-height: 420px;
+  background:
+    linear-gradient(135deg, rgba(10,22,40,0.93) 0%, rgba(18,34,68,0.82) 60%, rgba(200,149,42,0.15) 100%),
+    url('https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1600&q=80') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  padding: 5rem 0 6rem;
+  position: relative;
+}
+.contact-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 80px;
+  background: linear-gradient(transparent, #f4f6f9);
+}
+.contact-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.13);
+  overflow: hidden;
+}
+.contact-form-side {
+  padding: 2.8rem;
+}
+.contact-info-side {
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-mid) 100%);
+  padding: 2.8rem;
+  position: relative;
+  overflow: hidden;
+}
+.contact-info-side::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 250px; height: 250px;
+  border-radius: 50%;
+  background: rgba(200,149,42,0.08);
+}
+.contact-info-side::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: -40px;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: rgba(200,149,42,0.05);
+}
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.info-item:last-child { border-bottom: none; }
+.info-icon {
+  width: 44px; height: 44px;
+  background: rgba(200,149,42,0.15);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.info-icon i { color: var(--gold-light); font-size: 1.1rem; }
+.info-label { color: rgba(255,255,255,0.5); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; }
+.info-value { color: #fff; font-weight: 600; font-size: 0.95rem; }
+.info-value a { color: #fff; text-decoration: none; }
+.info-value a:hover { color: var(--gold-light); }
+.form-floating label { color: var(--text-muted); font-size: 0.9rem; }
+.form-floating .form-control, .form-floating .form-select {
+  border: 1.5px solid #e0e4ea;
+  border-radius: 10px;
+  background: #f8fafc;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+.form-floating .form-control:focus, .form-floating .form-select:focus {
+  border-color: var(--gold);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(200,149,42,0.12);
+}
+.service-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  border: 1.5px solid #e0e4ea;
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.82rem; font-weight: 600;
+  color: var(--navy);
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+  background: #f8fafc;
+}
+.service-badge input { display: none; }
+.service-badge:hover { border-color: var(--gold); color: var(--gold); }
+.service-badge.selected { background: var(--navy); color: #fff; border-color: var(--navy); }
+.submit-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--navy);
+  font-weight: 800;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: none;
+  border-radius: 10px;
+  padding: 1rem 2.5rem;
+  width: 100%;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(200,149,42,0.4);
+}
+.quick-action {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  display: flex; align-items: center; gap: 0.8rem;
+  text-decoration: none;
+  transition: all 0.2s;
+  margin-bottom: 0.8rem;
+}
+.quick-action:hover {
+  background: rgba(200,149,42,0.15);
+  border-color: var(--gold);
+  transform: translateX(4px);
+}
+.quick-action-icon {
+  width: 40px; height: 40px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.map-strip {
+  background: linear-gradient(135deg, rgba(10,22,40,0.9), rgba(18,34,68,0.85)),
+    url('https://images.unsplash.com/photo-1524661135-423995f22d0b?w=1600&q=80') center/cover no-repeat;
+  padding: 4rem 0;
+  color: #fff;
+}
+{% endblock %}
 
 {% block content %}
-<div class="lw-page-header">
-  <div class="container">
-    <span class="lw-section-label">Get In Touch</span>
-    <h1 class="lw-page-title">CONTACT US</h1>
-    <p class="lw-page-sub">Ready to start your project? We'll get back to you with a detailed quote.</p>
+
+<!-- HERO -->
+<div class="contact-hero">
+  <div class="container position-relative" style="z-index:2;">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" style="color:rgba(255,255,255,0.6);">Contact Us</li>
+      </ol>
+    </nav>
+    <h1 style="color:#fff; font-size:clamp(2rem,4vw,3.2rem); font-weight:800; margin-bottom:0.8rem;">
+      Let's Get You<br><span style="color:var(--gold-light);">Clean Water & Solar Power</span>
+    </h1>
+    <p style="color:rgba(255,255,255,0.78); font-size:1.05rem; max-width:480px;">
+      Send us your details and we'll get back to you within 24 hours with a free assessment and quote.
+    </p>
+    <div class="d-flex flex-wrap gap-3 mt-3">
+      <a href="tel:+263771698755" style="background:var(--gold); color:var(--navy); font-weight:700; padding:0.6rem 1.4rem; border-radius:6px; text-decoration:none; font-size:0.88rem; font-family:'Montserrat',sans-serif;">
+        <i class="fas fa-phone-alt me-2"></i>Call Now
+      </a>
+      <a href="https://wa.me/263771698755" style="background:#25d366; color:#fff; font-weight:700; padding:0.6rem 1.4rem; border-radius:6px; text-decoration:none; font-size:0.88rem; font-family:'Montserrat',sans-serif;">
+        <i class="fab fa-whatsapp me-2"></i>WhatsApp
+      </a>
+    </div>
   </div>
 </div>
 
-<section class="lw-section bg-lw-navy">
-  <div class="container">
-    <div class="row gy-5">
+<!-- MAIN CONTACT SECTION -->
+<section class="bg-light-grey pb-5" style="padding-top: 0;">
+  <div class="container" style="margin-top: -60px; position: relative; z-index: 10;">
+    <div class="contact-card">
+      <div class="row g-0">
 
-      <!-- Contact Info -->
-      <div class="col-lg-4">
-        <h4 class="lw-contact-heading mb-4">Reach Us Directly</h4>
-        <div class="d-flex flex-column gap-3">
-          <a href="tel:{{ COMPANY.phone }}" class="lw-contact-item">
-            <div class="lw-contact-icon"><i class="bi bi-telephone-fill"></i></div>
-            <div>
-              <small>Phone</small>
-              <strong>{{ COMPANY.phone }}</strong>
+        <!-- FORM SIDE -->
+        <div class="col-lg-7 contact-form-side">
+          <div class="section-tag mb-1">Send a Message</div>
+          <h3 class="text-navy mb-1" style="font-weight:800;">Get Your Free Quote</h3>
+          <p class="text-muted small mb-4">Fill in your details and we'll respond within 24 hours.</p>
+
+          {% if form.errors %}
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Please correct the errors below. <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+          {% endif %}
+
+          <form method="post" action="/contact/">
+            {% csrf_token %}
+            <div class="row g-3 mb-3">
+              <div class="col-sm-6">
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Full Name"
+                         value="{{ form.name.value|default:'' }}" required>
+                  <label for="name"><i class="fas fa-user me-1"></i> Full Name *</label>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-floating">
+                  <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone Number"
+                         value="{{ form.phone.value|default:'' }}" required>
+                  <label for="phone"><i class="fas fa-phone me-1"></i> Phone Number *</label>
+                </div>
+              </div>
             </div>
-          </a>
-          <a href="mailto:{{ COMPANY.email }}" class="lw-contact-item">
-            <div class="lw-contact-icon"><i class="bi bi-envelope-fill"></i></div>
-            <div>
-              <small>Email</small>
-              <strong>{{ COMPANY.email }}</strong>
+
+            <div class="row g-3 mb-3">
+              <div class="col-sm-6">
+                <div class="form-floating">
+                  <input type="email" class="form-control" id="email" name="email" placeholder="Email"
+                         value="{{ form.email.value|default:'' }}">
+                  <label for="email"><i class="fas fa-envelope me-1"></i> Email Address</label>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="location" name="location" placeholder="Your Location"
+                         value="{{ form.location.value|default:'' }}">
+                  <label for="location"><i class="fas fa-map-marker-alt me-1"></i> Your Location</label>
+                </div>
+              </div>
             </div>
-          </a>
-          <a href="mailto:{{ COMPANY.email_alt }}" class="lw-contact-item">
-            <div class="lw-contact-icon"><i class="bi bi-envelope"></i></div>
-            <div>
-              <small>Alt Email</small>
-              <strong>{{ COMPANY.email_alt }}</strong>
+
+            <!-- SERVICE SELECTION -->
+            <div class="mb-3">
+              <label class="form-label"><i class="fas fa-tools me-1"></i> Service Interested In</label>
+              <div class="d-flex flex-wrap gap-2" id="serviceOptions">
+                <label class="service-badge" onclick="selectService(this, 'Site Survey')">
+                  <input type="radio" name="service" value="Site Survey"> <i class="fas fa-map-marked-alt"></i> Site Survey
+                </label>
+                <label class="service-badge" onclick="selectService(this, 'Borehole Drilling')">
+                  <input type="radio" name="service" value="Borehole Drilling"> <i class="fas fa-tint"></i> Borehole Drilling
+                </label>
+                <label class="service-badge" onclick="selectService(this, 'Borehole Installation')">
+                  <input type="radio" name="service" value="Borehole Installation"> <i class="fas fa-pump-soap"></i> Installation
+                </label>
+                <label class="service-badge" onclick="selectService(this, 'Solar System')">
+                  <input type="radio" name="service" value="Solar System"> <i class="fas fa-solar-panel"></i> Solar System
+                </label>
+                <label class="service-badge" onclick="selectService(this, 'Repairs/Fishout')">
+                  <input type="radio" name="service" value="Repairs/Fishout"> <i class="fas fa-wrench"></i> Repairs
+                </label>
+                <label class="service-badge" onclick="selectService(this, 'Other')">
+                  <input type="radio" name="service" value="Other"> <i class="fas fa-question-circle"></i> Other
+                </label>
+              </div>
             </div>
-          </a>
-          <a href="{{ COMPANY.facebook_url }}" target="_blank" class="lw-contact-item">
-            <div class="lw-contact-icon"><i class="bi bi-facebook"></i></div>
-            <div>
-              <small>Facebook</small>
-              <strong>{{ COMPANY.facebook }}</strong>
+
+            <div class="mb-4">
+              <div class="form-floating">
+                <textarea class="form-control" id="message" name="message"
+                          placeholder="Your message" style="height:120px;" required>{{ form.message.value|default:'' }}</textarea>
+                <label for="message"><i class="fas fa-comment-dots me-1"></i> Message / Details *</label>
+              </div>
             </div>
-          </a>
+
+            <button type="submit" class="submit-btn">
+              <i class="fas fa-paper-plane me-2"></i>Send Enquiry — We Respond Within 24hrs
+            </button>
+
+            <p class="text-muted text-center mt-3" style="font-size:0.78rem;">
+              <i class="fas fa-lock me-1"></i>Your information is secure and will never be shared.
+            </p>
+          </form>
         </div>
-      </div>
 
-      <!-- Form -->
-      <div class="col-lg-8">
-        <h4 class="lw-contact-heading mb-4">Send an Enquiry</h4>
-        <form method="post" novalidate>
-          {% csrf_token %}
-          <div class="row g-3">
-            <div class="col-sm-6">
-              <label class="lw-form-label">First Name *</label>
-              {{ form.first_name }}
-              {% if form.first_name.errors %}
-              <div class="lw-form-error">{{ form.first_name.errors.0 }}</div>
-              {% endif %}
-            </div>
-            <div class="col-sm-6">
-              <label class="lw-form-label">Last Name *</label>
-              {{ form.last_name }}
-              {% if form.last_name.errors %}
-              <div class="lw-form-error">{{ form.last_name.errors.0 }}</div>
-              {% endif %}
-            </div>
-            <div class="col-sm-6">
-              <label class="lw-form-label">Phone Number *</label>
-              {{ form.phone }}
-              {% if form.phone.errors %}
-              <div class="lw-form-error">{{ form.phone.errors.0 }}</div>
-              {% endif %}
-            </div>
-            <div class="col-sm-6">
-              <label class="lw-form-label">Email</label>
-              {{ form.email }}
-            </div>
-            <div class="col-12">
-              <label class="lw-form-label">Service Required *</label>
-              {{ form.service }}
-              {% if form.service.errors %}
-              <div class="lw-form-error">{{ form.service.errors.0 }}</div>
-              {% endif %}
-            </div>
-            <div class="col-12">
-              <label class="lw-form-label">Your Location / Area</label>
-              {{ form.location }}
-            </div>
-            <div class="col-12">
-              <label class="lw-form-label">Message / Additional Details</label>
-              {{ form.message }}
-            </div>
-            <div class="col-12">
-              <button type="submit" class="btn lw-btn-gold btn-lg px-5">
-                Send Enquiry <i class="bi bi-arrow-right ms-2"></i>
-              </button>
+        <!-- INFO SIDE -->
+        <div class="col-lg-5 contact-info-side">
+          <div class="section-tag mb-1" style="color:var(--gold-light);">Contact Information</div>
+          <h3 style="color:#fff; font-weight:800; margin-bottom:0.5rem;">Reach Us Directly</h3>
+          <p style="color:rgba(255,255,255,0.6); font-size:0.88rem; margin-bottom:1.5rem;">Available Monday–Saturday, 7am–6pm</p>
+
+          <div class="info-item">
+            <div class="info-icon"><i class="fas fa-phone-alt"></i></div>
+            <div>
+              <div class="info-label">Phone / WhatsApp</div>
+              <div class="info-value"><a href="tel:+263771698755">+263 771 698 755</a></div>
             </div>
           </div>
-        </form>
-      </div>
+          <div class="info-item">
+            <div class="info-icon"><i class="fas fa-envelope"></i></div>
+            <div>
+              <div class="info-label">Email</div>
+              <div class="info-value"><a href="mailto:engineeringlightworld@gmail.com">engineeringlightworld@gmail.com</a></div>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-icon"><i class="fas fa-envelope"></i></div>
+            <div>
+              <div class="info-label">Alternative Email</div>
+              <div class="info-value"><a href="mailto:mushangiebryan@gmail.com">mushangiebryan@gmail.com</a></div>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div>
+              <div class="info-label">Coverage Area</div>
+              <div class="info-value">Zimbabwe — Everywhere to Anyone</div>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-icon"><i class="fab fa-facebook-f"></i></div>
+            <div>
+              <div class="info-label">Facebook</div>
+              <div class="info-value"><a href="https://facebook.com/lightworldengineering" target="_blank">light world engineering</a></div>
+            </div>
+          </div>
 
+          <div class="mt-4">
+            <p style="color:rgba(255,255,255,0.5); font-size:0.78rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.8rem;">Quick Actions</p>
+            <a href="https://wa.me/263771698755" class="quick-action" target="_blank">
+              <div class="quick-action-icon" style="background:#25d366;"><i class="fab fa-whatsapp" style="color:#fff;"></i></div>
+              <div>
+                <div style="color:#fff; font-weight:600; font-size:0.88rem;">Chat on WhatsApp</div>
+                <div style="color:rgba(255,255,255,0.5); font-size:0.75rem;">Instant response</div>
+              </div>
+              <i class="fas fa-chevron-right ms-auto" style="color:rgba(255,255,255,0.3);"></i>
+            </a>
+            <a href="tel:+263771698755" class="quick-action">
+              <div class="quick-action-icon" style="background:var(--gold);"><i class="fas fa-phone-alt" style="color:var(--navy);"></i></div>
+              <div>
+                <div style="color:#fff; font-weight:600; font-size:0.88rem;">Call Us Now</div>
+                <div style="color:rgba(255,255,255,0.5); font-size:0.75rem;">+263 771 698 755</div>
+              </div>
+              <i class="fas fa-chevron-right ms-auto" style="color:rgba(255,255,255,0.3);"></i>
+            </a>
+            <a href="https://www.facebook.com/lightworldengineering" class="quick-action" target="_blank">
+              <div class="quick-action-icon" style="background:#1877f2;"><i class="fab fa-facebook-f" style="color:#fff;"></i></div>
+              <div>
+                <div style="color:#fff; font-weight:600; font-size:0.88rem;">Message on Facebook</div>
+                <div style="color:rgba(255,255,255,0.5); font-size:0.75rem;">light world engineering</div>
+              </div>
+              <i class="fas fa-chevron-right ms-auto" style="color:rgba(255,255,255,0.3);"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 </section>
+
+<!-- WHY CONTACT US STRIP -->
+<section class="map-strip">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="section-tag" style="color:var(--gold-light);">Our Promise</div>
+      <h2 style="color:#fff; font-weight:800;">What Happens After You Contact Us</h2>
+    </div>
+    <div class="row g-4 text-center">
+      <div class="col-md-3">
+        <div style="background:rgba(255,255,255,0.07); border-radius:14px; padding:1.8rem 1.2rem;">
+          <div style="width:56px; height:56px; background:var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem;">
+            <span style="color:var(--navy); font-weight:800; font-size:1.2rem; font-family:'Montserrat',sans-serif;">1</span>
+          </div>
+          <i class="fas fa-envelope-open-text fa-2x mb-3" style="color:var(--gold-light);"></i>
+          <h5 style="color:#fff; font-size:0.95rem;">We Receive Your Enquiry</h5>
+          <p style="color:rgba(255,255,255,0.6); font-size:0.82rem; margin:0;">Our team reviews your request immediately.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div style="background:rgba(255,255,255,0.07); border-radius:14px; padding:1.8rem 1.2rem;">
+          <div style="width:56px; height:56px; background:var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem;">
+            <span style="color:var(--navy); font-weight:800; font-size:1.2rem; font-family:'Montserrat',sans-serif;">2</span>
+          </div>
+          <i class="fas fa-phone-alt fa-2x mb-3" style="color:var(--gold-light);"></i>
+          <h5 style="color:#fff; font-size:0.95rem;">We Call You Back</h5>
+          <p style="color:rgba(255,255,255,0.6); font-size:0.82rem; margin:0;">Within 24 hours to discuss your needs.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div style="background:rgba(255,255,255,0.07); border-radius:14px; padding:1.8rem 1.2rem;">
+          <div style="width:56px; height:56px; background:var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem;">
+            <span style="color:var(--navy); font-weight:800; font-size:1.2rem; font-family:'Montserrat',sans-serif;">3</span>
+          </div>
+          <i class="fas fa-clipboard-list fa-2x mb-3" style="color:var(--gold-light);"></i>
+          <h5 style="color:#fff; font-size:0.95rem;">Free Quote Provided</h5>
+          <p style="color:rgba(255,255,255,0.6); font-size:0.82rem; margin:0;">Detailed, no-obligation quote with full breakdown.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div style="background:rgba(255,255,255,0.07); border-radius:14px; padding:1.8rem 1.2rem;">
+          <div style="width:56px; height:56px; background:var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem;">
+            <span style="color:var(--navy); font-weight:800; font-size:1.2rem; font-family:'Montserrat',sans-serif;">4</span>
+          </div>
+          <i class="fas fa-hard-hat fa-2x mb-3" style="color:var(--gold-light);"></i>
+          <h5 style="color:#fff; font-size:0.95rem;">We Get to Work</h5>
+          <p style="color:rgba(255,255,255,0.6); font-size:0.82rem; margin:0;">Our team arrives on site and delivers results.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function selectService(el, value) {
+  document.querySelectorAll('.service-badge').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+</script>
 {% endblock %}
