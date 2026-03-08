@@ -1,10 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
-
 {% block title %}Gallery{% endblock %}
 
 {% block content %}
-
 <div class="page-hero">
   <div class="container">
     <h1>Project Gallery</h1>
@@ -30,9 +28,33 @@
       {% for img in images %}
       <div class="col-sm-6 col-md-4 col-lg-3">
         <div class="card h-100 shadow-sm">
+
+          <!-- VIDEO -->
+          {% if img.video_url %}
+          <div style="position:relative;cursor:pointer;" onclick="openVideo('{{ img.video_url|escapejs }}')">
+            {% if 'youtube.com/embed/' in img.video_url %}
+            <img src="https://img.youtube.com/vi/{{ img.video_url|cut:'https://www.youtube.com/embed/' }}/hqdefault.jpg"
+                 class="card-img-top" style="aspect-ratio:4/3;object-fit:cover;" alt="{{ img.title }}">
+            {% else %}
+            <div style="aspect-ratio:4/3;background:#111;display:flex;align-items:center;justify-content:center;">
+              <i class="fas fa-video fa-3x text-muted"></i>
+            </div>
+            {% endif %}
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+              <div style="width:52px;height:52px;background:rgba(255,0,0,0.85);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                <i class="fas fa-play text-white" style="margin-left:4px;"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- IMAGE -->
+          {% elif img.image %}
           <img src="{{ img.image.url }}" class="card-img-top" alt="{{ img.title }}" style="aspect-ratio:4/3;object-fit:cover;">
+
+          {% endif %}
+
           <div class="card-body p-2">
-            <div class="small text-muted text-uppercase" style="font-size:0.68rem;letter-spacing:1px;">{{ img.get_category_display }}</div>
+            <div class="small text-muted text-uppercase" style="font-size:0.68rem;letter-spacing:1px;">{{ img.get_media_type_display }}</div>
             <div class="fw-bold" style="font-size:0.88rem;color:var(--navy);">{{ img.title }}</div>
             {% if img.caption %}<div class="text-muted" style="font-size:0.78rem;">{{ img.caption }}</div>{% endif %}
           </div>
@@ -41,8 +63,8 @@
       {% empty %}
       <div class="col-12 text-center py-5">
         <i class="fas fa-camera fa-3x text-muted mb-3 d-block"></i>
-        <h5 class="text-muted">No photos yet</h5>
-        {% if active_cat %}<p><a href="{% url 'core:gallery' %}">View all photos</a></p>{% endif %}
+        <h5 class="text-muted">No media yet</h5>
+        {% if active_cat %}<p><a href="{% url 'core:gallery' %}">View all</a></p>{% endif %}
       </div>
       {% endfor %}
     </div>
@@ -50,4 +72,37 @@
   </div>
 </section>
 
+<!-- VIDEO MODAL -->
+<div id="videoModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.9);align-items:center;justify-content:center;padding:20px;">
+  <div style="position:relative;max-width:860px;width:100%;">
+    <div onclick="closeVideo()" style="position:absolute;top:-14px;right:-14px;width:40px;height:40px;background:#222;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;cursor:pointer;z-index:1;">
+      <i class="fas fa-times"></i>
+    </div>
+    <div class="ratio ratio-16x9">
+      <iframe id="videoFrame" src="" allowfullscreen style="border-radius:8px;"></iframe>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  function openVideo(url) {
+    document.getElementById('videoFrame').src = url + '?autoplay=1';
+    document.getElementById('videoModal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeVideo() {
+    document.getElementById('videoFrame').src = '';
+    document.getElementById('videoModal').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  document.getElementById('videoModal').addEventListener('click', function(e) {
+    if (e.target === this) closeVideo();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeVideo();
+  });
+</script>
 {% endblock %}
