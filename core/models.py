@@ -26,6 +26,7 @@ class GalleryImage(models.Model):
     ]
     title = models.CharField(max_length=150)
     image = models.ImageField(upload_to='gallery/')
+    video_url = models.URLField(blank=True, default='')
     media_type = models.CharField(max_length=20, choices=SERVICE_CHOICES, default='other')
     caption = models.CharField(max_length=250, blank=True)
     order = models.PositiveIntegerField(default=0)
