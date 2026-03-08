@@ -31,17 +31,7 @@ def gallery_view(request):
     category = request.GET.get('cat', '')
     images = GalleryImage.objects.filter(is_active=True)
     if category:
-        images = images.filter(category=category)
-    
-    # debug
-    import logging
-    logger = logging.getLogger(__name__)
-    logger.error("GALLERY DEBUG: total=%s active=%s cat=%s", 
-        GalleryImage.objects.count(),
-        GalleryImage.objects.filter(is_active=True).count(),
-        category
-    )
-    
+        images = images.filter(media_type=category)
     return render(request, 'core/gallery.html', {
         'images': images,
         'active_cat': category,
